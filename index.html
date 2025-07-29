@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & Cybersecurity Mastery Roadmap</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖🔒 AI & Cybersecurity Mastery</h1>
+            <p>ADHD-Optimized Learning Roadmap for Future AI & Security Expert</p>
+        </div>
+
+        <div class="save-notice">
+            💾 <strong>Progress Auto-Saves!</strong> Your checkmarks and progress save automatically when learning locally.
+        </div>
+
+        <div class="focus-today">
+            <h2>🎯 Today's Focus</h2>
+            <div class="focus-task">
+                <strong>AI Track:</strong> Start Python Basics - Complete "Introduction to Python" on freeCodeCamp (2 hours)
+            </div>
+            <div class="focus-task">
+                <strong>Security Track:</strong> Complete "What is Cybersecurity?" fundamentals on TryHackMe (1 hour)
+            </div>
+            <p style="margin-top: 15px; opacity: 0.9;">
+                📚 Study Tip: Use 25-minute Pomodoro sessions • 🧠 Review flashcards for 5 minutes after each session
+            </p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="aiProgress">0</div>
+                <div class="stat-label">AI Tasks Done</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="aiProgressBar" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="securityProgress">0</div>
+                <div class="stat-label">Security Tasks Done</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="securityProgressBar" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="currentWeek">Week 1</div>
+                <div class="stat-label">Current Focus</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalCerts">11</div>
+                <div class="stat-label">Certificates Available</div>
+            </div>
+        </div>
+
+        <div class="flashcard-section">
+            <h2 style="text-align: center; margin-bottom: 25px; color: #333;">🧠 ADHD-Optimized Flashcards</h2>
+            <div class="flashcard-sets">
+                <div class="flashcard-set" onclick="startFlashcards('ai')">
+                    <h3>🤖 AI & Machine Learning</h3>
+                    <p>15 cards covering Python, ML algorithms, neural networks, and AI fundamentals</p>
+                </div>
+                <div class="flashcard-set" onclick="startFlashcards('security')">
+                    <h3>🔒 Cybersecurity Essentials</h3>
+                    <p>12 cards covering security principles, ethical hacking, and penetration testing</p>
+                </div>
+                <div class="flashcard-set" onclick="startFlashcards('advanced')">
+                    <h3>🚀 Advanced Concepts</h3>
+                    <p>10 cards covering deep learning, advanced security techniques, and industry tools</p>
+                </div>
+            </div>
+            
+            <div class="flashcard-container" id="flashcardContainer">
+                <div class="flashcard" id="flashcard" onclick="flipCard()">
+                    <div class="card-counter" id="cardCounter">Card 1 of 15</div>
+                    <div class="card-content" id="cardContent">Click to start studying!</div>
+                </div>
+                <div class="card-buttons" id="cardButtons">
+                    <button class="card-btn btn-easy" onclick="rateCard('easy')">😊 Easy (4 days)</button>
+                    <button class="card-btn btn-medium" onclick="rateCard('medium')">🤔 Medium (2 days)</button>
+                    <button class="card-btn btn-hard" onclick="rateCard('hard')">😰 Hard (1 day)</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('ai')">🤖 AI Development (24 weeks)</button>
+            <button class="tab" onclick="switchTab('security')">🔒 Cybersecurity (20 weeks)</button>
+            <button class="tab" onclick="switchTab('portfolio')">🏆 Portfolio & Certifications</button>
+        </div>
+
+        <div id="ai" class="tab-content active">
+            <div class="track-header">
+                <h2 class="track-title">🤖 AI Development Mastery</h2>
+                <p class="track-subtitle">From Python basics to building your own AI applications - 24 weeks to AI expert</p>
+                <div class="cert-badges">
+                    <span class="cert-badge">freeCodeCamp Python (FREE)</span>
+                    <span class="cert-badge">freeCodeCamp Machine Learning (FREE)</span>
+                    <span class="cert-badge">Google AI Essentials ($49/mo)</span>
+                    <span class="cert-badge">TensorFlow Developer ($100)</span>
+                    <span class="cert-badge">AWS ML Specialty ($300)</span>
+                </div>
+            </div>
+
+            <!-- AI Development Weeks Content -->
+            <div class="week-container">
+                <div class="week-header" onclick="toggleWeek('ai-week1')">
+                    <div class="week-title">🐍 Weeks 1-4: Python for AI Foundation</div>
+                    <div class="week-meta">
+                        <span>⏱️ 8-12 hours/week</span>
+                        <span>🎯 FREE Certification</span>
+                        <span>▼</span>
+                    </div>
+                </div>
+                <div class="week-content" id="ai-week1">
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" class="task-checkbox" onchange="updateProgress()">
+                            <span class="task-text">Complete freeCodeCamp "Scientific Computing with Python" certification</span>
+                            <span class="task-time">20 hours</span>
+                            <span class="platform-tag freecodecamp">freeCodeCamp</span>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" class="task-checkbox" onchange="updateProgress()">
+                            <span class="task-text">Build: Budget Calculator, Time Calculator, Probability Calculator</span>
+                            <span class="task-time">15 hours</span>
+                            <span class="platform-tag freecodecamp">Projects</span>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" class="task-checkbox" onchange="updateProgress()">
+                            <span class="task-text">Python for Data Science - Pandas and NumPy fundamentals</span>
+                            <span class="task-time">8 hours</span>
+                            <span class="platform-tag youtube">YouTube</span>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" class="task-checkbox" onchange="updateProgress()">
+                            <span class="task-text">Practice: 20 Python coding challenges on HackerRank</span>
+                            <span class="task-time">10 hours</span>
+                            <span class="platform-tag youtube">Practice</span>
+                        </li>
+                    </ul>
+                    <div class="concepts-box">
+                        <div class="concepts-title">🎯 Key Concepts to Master:</div>
+                        Python syntax • Data structures • Functions • Libraries (NumPy, Pandas) • File handling • Error handling • Object-oriented programming basics
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more weeks here - abbreviated for space -->
+        </div>
+
+        <div id="security" class="tab-content">
+            <div class="track-header">
+                <h2 class="track-title">🔒 Cybersecurity & Ethical Hacking</h2>
+                <p class="track-subtitle">From complete beginner to certified ethical hacker - 20 weeks to security expert</p>
+                <div class="cert-badges">
+                    <span class="cert-badge">CompTIA Security+ ($370)</span>
+                    <span class="cert-badge">CEH Certified Ethical Hacker ($1,199)</span>
+                    <span class="cert-badge">OSCP Advanced Penetration Testing ($1,499)</span>
+                    <span class="cert-badge">CISSP Management Level</span>
+                </div>
+            </div>
+
+            <!-- Security weeks content -->
+            <div class="week-container">
+                <div class="week-header" onclick="toggleWeek('sec-week1')">
+                    <div class="week-title">🛡️ Weeks 1-3: Cybersecurity Foundations</div>
+                    <div class="week-meta">
+                        <span>⏱️ 8-12 hours/week</span>
+                        <span>🎯 Complete Beginner</span>
+                        <span>▼</span>
+                    </div>
+                </div>
+                <div class="week-content" id="sec-week1">
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" class="task-checkbox" onchange="updateProgress()">
+                            <span class="task-text">TryHackMe "Complete Beginner" learning path - Start from zero</span>
+                            <span class="task-time">25 hours</span>
+                            <span class="platform-tag tryhackme">TryHackMe</span>
+                        </li>
+                        <!-- Add more tasks -->
+                    </ul>
+                    <div class="concepts-box">
+                        <div class="concepts-title">🎯 Key Concepts to Master:</div>
+                        CIA Triad • Risk management • Linux command line • Networking fundamentals
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="portfolio" class="tab-content">
+            <div class="track-header">
+                <h2 class="track-title">🏆 Portfolio & Certification Roadmap</h2>
+                <p class="track-subtitle">Strategic certification pathway worth $8,000+ in professional credentials</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 30px;">
+                <div style="background: linear-gradient(135deg, #4caf50, #45a049); color: white; padding: 25px; border-radius: 15px;">
+                    <h3 style="margin-bottom: 15px;">🆓 FREE Certifications (Start Here)</h3>
+                    <ul style="list-style: none; line-height: 1.8;">
+                        <li>✅ freeCodeCamp Scientific Computing with Python</li>
+                        <li>✅ freeCodeCamp Data Analysis with Python</li>
+                        <li>✅ freeCodeCamp Machine Learning with Python</li>
+                        <li><strong>Total Value: $3,000+ (Industry Recognized)</strong></li>
+                    </ul>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #ff9800, #f57c00); color: white; padding: 25px; border-radius: 15px;">
+                    <h3 style="margin-bottom: 15px;">💰 Affordable Tier ($50-$400)</h3>
+                    <ul style="list-style: none; line-height: 1.8;">
+                        <li>🎓 Google AI Essentials - $49/month</li>
+                        <li>🎓 CompTIA Security+ - $370</li>
+                        <li>🎓 TensorFlow Developer - $100</li>
+                        <li><strong>ROI: 300%+ salary increase potential</strong></li>
+                    </ul>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #9c27b0, #7b1fa2); color: white; padding: 25px; border-radius: 15px;">
+                    <h3 style="margin-bottom: 15px;">🚀 Premium Tier ($1,000+)</h3>
+                    <ul style="list-style: none; line-height: 1.8;">
+                        <li>🏆 CEH Certified Ethical Hacker - $1,199</li>
+                        <li>🏆 OSCP Advanced Penetration Testing - $1,499</li>
+                        <li>🏆 AWS ML Specialty - $300</li>
+                        <li><strong>Career Impact: Senior-level positions</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="save-notification" id="saveNotification">
+        ✅ Progress saved!
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
