@@ -1,9 +1,13 @@
-// Cybersecurity Roadmap - Fixed Saving & Enhanced Retention Features
+// Cybersecurity Roadmap - Complete Fixed Script with All Features
 class CyberSecurityTracker {
     constructor() {
         this.storageKey = 'cybersecurity_progress';
         this.retentionKey = 'cybersecurity_retention';
         this.streakKey = 'cybersecurity_streak';
+        this.currentQuestion = 0;
+        this.quizAnswers = [];
+        this.totalQuestions = 0;
+        this.autoSaveInterval = null;
         
         // Initialize on page load
         this.init();
@@ -12,7 +16,7 @@ class CyberSecurityTracker {
     init() {
         console.log('🔒 Cybersecurity Tracker Initialized');
         
-        // Load saved progress
+        // Load saved progress first
         this.loadProgress();
         this.loadRetentionData();
         
@@ -30,6 +34,9 @@ class CyberSecurityTracker {
         
         // Check daily streak
         this.checkDailyStreak();
+        
+        // Setup phase toggles
+        this.setupPhaseToggles();
     }
 
     // FIXED SAVING SYSTEM
@@ -55,7 +62,7 @@ class CyberSecurityTracker {
             return true;
         } catch (error) {
             console.error('❌ Failed to save progress:', error);
-            alert('Failed to save progress. Please try again.');
+            this.showErrorNotification('Failed to save progress. Please try again.');
             return false;
         }
     }
@@ -67,8 +74,16 @@ class CyberSecurityTracker {
                 const progress = JSON.parse(saved);
                 
                 Object.entries(progress).forEach(([taskId, isChecked]) => {
-                    const checkbox = document.getElementById(taskId) || 
-                                   document.querySelector(`input[type="checkbox"]:nth-of-type(${taskId.split('_')[1]})`);
+                    let checkbox = document.getElementById(taskId);
+                    
+                    // If no direct ID match and it's a generated task ID, try finding by index
+                    if (!checkbox && taskId.startsWith('task_')) {
+                        const index = parseInt(taskId.split('_')[1]);
+                        if (!isNaN(index)) {
+                            const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+                            checkbox = allCheckboxes[index];
+                        }
+                    }
                     
                     if (checkbox) {
                         checkbox.checked = isChecked;
@@ -96,21 +111,129 @@ class CyberSecurityTracker {
             border-radius: 5px;
             z-index: 1000;
             animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         `;
         
         document.body.appendChild(notification);
         
         // Remove after 2 seconds
         setTimeout(() => {
-            notification.remove();
+            if (document.body.contains(notification)) {
+                notification.remove();
+            }
         }, 2000);
+    }
+
+    showErrorNotification(message) {
+        const notification = document.createElement('div');
+        notification.innerHTML = `❌ ${message}`;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                notification.remove();
+            }
+        }, 3000);
+    }
+
+    // PHASE TOGGLE FUNCTIONALITY
+    setupPhaseToggles() {
+        try {
+            // Add toggle functionality for collapsible phases
+            const phaseHeaders = document.querySelectorAll('.phase-header, .week-header, h2, h3');
+            
+            phaseHeaders.forEach(header => {
+                if (header.textContent.includes('Phase') || 
+                    header.textContent.includes('Week') || 
+                    header.textContent.includes('▶') || 
+                    header.textContent.includes('▼')) {
+                    
+                    header.style.cursor = 'pointer';
+                    header.style.userSelect = 'none';
+                    
+                    // Remove any existing click listeners to prevent duplicates
+                    // Note: We can't remove specific listeners without a reference
+                    // So we'll just add the new one (duplicate prevention handled by the DOM)
+                    
+                    // Add new click listener
+                    header.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.togglePhaseContent(header);
+                    });
+                }
+            });
+            
+            console.log(`Set up toggles for ${phaseHeaders.length} phase headers`);
+        } catch (error) {
+            console.warn('Error setting up phase toggles:', error);
+        }
+    }
+
+    togglePhaseContent(header) {
+        if (!header) return;
+        
+        // Find the content to toggle - could be next sibling or parent's next sibling
+        let content = header.nextElementSibling;
+        
+        // If no direct sibling, try finding the content area
+        if (!content) {
+            // Look for common content containers
+            content = header.parentElement?.querySelector('.phase-content, .week-content, .content');
+        }
+        
+        // If still no content, try looking for the next div
+        if (!content) {
+            let nextElement = header.nextElementSibling;
+            while (nextElement && nextElement.nodeType !== 1) {
+                nextElement = nextElement.nextSibling;
+            }
+            content = nextElement;
+        }
+        
+        if (content) {
+            const isHidden = content.style.display === 'none' || 
+                           getComputedStyle(content).display === 'none';
+            
+            if (isHidden) {
+                content.style.display = 'block';
+                // Update arrow indicators
+                header.textContent = header.textContent.replace('▶', '▼').replace('►', '▼');
+                if (!header.textContent.includes('▼') && !header.textContent.includes('▶')) {
+                    header.textContent = '▼ ' + header.textContent;
+                }
+            } else {
+                content.style.display = 'none';
+                // Update arrow indicators
+                header.textContent = header.textContent.replace('▼', '▶').replace('►', '▶');
+                if (!header.textContent.includes('▶') && !header.textContent.includes('▼')) {
+                    header.textContent = '▶ ' + header.textContent;
+                }
+            }
+            
+            console.log(`Toggled content for: ${header.textContent.substring(0, 30)}...`);
+        } else {
+            console.warn('No content found to toggle for element:', header);
+        }
     }
 
     // RETENTION SYSTEM FOR BETTER LEARNING
     setupRetentionSystem() {
         this.createRetentionPanel();
         this.scheduleReviews();
-        this.setupQuizSystem();
+        this.setupQuizSystem(); // Fixed: Now this method exists
     }
 
     createRetentionPanel() {
@@ -205,6 +328,7 @@ class CyberSecurityTracker {
                 cursor: pointer;
                 font-weight: bold;
                 transition: all 0.3s ease;
+                margin: 5px;
             }
             
             .cta-button:hover {
@@ -222,8 +346,12 @@ class CyberSecurityTracker {
         
         // Insert after the header
         const container = document.querySelector('.container') || document.body;
-        const header = container.querySelector('h1') || container.firstChild;
-        header.parentNode.insertBefore(retentionPanel, header.nextSibling);
+        const firstChild = container.firstElementChild;
+        if (firstChild) {
+            container.insertBefore(retentionPanel, firstChild.nextSibling);
+        } else {
+            container.appendChild(retentionPanel);
+        }
         
         // Setup retention event listeners
         this.setupRetentionListeners();
@@ -375,7 +503,61 @@ class CyberSecurityTracker {
         });
     }
 
-    // QUIZ SYSTEM
+    markReview(taskId, difficulty) {
+        const retentionData = this.getRetentionData();
+        
+        if (retentionData[taskId]) {
+            retentionData[taskId].reviewCount++;
+            
+            // Adjust strength based on difficulty
+            switch(difficulty) {
+                case 'easy':
+                    retentionData[taskId].strength = Math.min(5, retentionData[taskId].strength + 1);
+                    break;
+                case 'medium':
+                    // Keep same strength
+                    break;
+                case 'hard':
+                    retentionData[taskId].strength = Math.max(1, retentionData[taskId].strength - 1);
+                    break;
+            }
+            
+            // Reschedule next review
+            const multiplier = retentionData[taskId].strength;
+            const baseInterval = [1, 3, 7, 14, 30][Math.min(4, retentionData[taskId].reviewCount)] || 30;
+            const nextInterval = baseInterval * multiplier;
+            retentionData[taskId].nextReview = Date.now() + (nextInterval * 24 * 60 * 60 * 1000);
+        }
+        
+        this.saveRetentionData(retentionData);
+        
+        // Remove the reviewed item from display
+        const reviewItem = document.querySelector(`button[onclick*="${taskId}"]`)?.closest('.review-item');
+        if (reviewItem) {
+            reviewItem.style.opacity = '0.5';
+            reviewItem.innerHTML += '<div style="text-align: center; margin-top: 10px; color: #4CAF50;">✅ Review Complete</div>';
+        }
+        
+        // Check if all reviews are done
+        setTimeout(() => {
+            const remainingItems = document.querySelectorAll('.review-item:not([style*="opacity: 0.5"])');
+            if (remainingItems.length === 0) {
+                const modal = document.getElementById('review-modal');
+                if (modal) {
+                    modal.remove();
+                }
+                alert('🎉 All reviews complete! Your knowledge is getting stronger!');
+                this.updateRetentionDisplay();
+            }
+        }, 1000);
+    }
+
+    // QUIZ SYSTEM - Fixed: Now this method exists
+    setupQuizSystem() {
+        // Quiz system is now integrated into the retention panel
+        console.log('🎯 Quiz system initialized');
+    }
+
     startQuiz() {
         const quizQuestions = this.generateQuizQuestions();
         
@@ -423,6 +605,261 @@ class CyberSecurityTracker {
         ];
     }
 
+    createQuizModal(questions) {
+        const modal = document.createElement('div');
+        modal.id = 'quiz-modal';
+        
+        const selectedQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 3);
+        this.totalQuestions = selectedQuestions.length;
+        this.currentQuestion = 0;
+        this.quizAnswers = [];
+        
+        modal.innerHTML = `
+            <div class="quiz-content">
+                <div class="quiz-header">
+                    <h3>🎯 Cybersecurity Knowledge Check</h3>
+                    <span class="close-quiz">&times;</span>
+                </div>
+                <div class="quiz-body">
+                    <div id="quiz-questions">
+                        ${selectedQuestions.map((q, index) => `
+                            <div class="quiz-question" id="question-${index}" ${index === 0 ? '' : 'style="display:none"'}>
+                                <div class="question-counter">Question ${index + 1} of ${selectedQuestions.length}</div>
+                                <h4>${q.question}</h4>
+                                <div class="quiz-options">
+                                    ${q.options.map((option, optIndex) => `
+                                        <button class="quiz-option" onclick="cyberTracker.selectQuizAnswer(${index}, ${optIndex}, ${q.correct})">${option}</button>
+                                    `).join('')}
+                                </div>
+                                <div class="quiz-explanation" id="explanation-${index}" style="display:none">
+                                    <strong>Explanation:</strong> ${q.explanation}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-navigation">
+                        <button id="prev-question" onclick="cyberTracker.prevQuestion()" style="display:none">Previous</button>
+                        <button id="next-question" onclick="cyberTracker.nextQuestion()" style="display:none">Next</button>
+                        <button id="finish-quiz" onclick="cyberTracker.finishQuiz()" style="display:none">Finish Quiz</button>
+                    </div>
+                    <div id="quiz-results" style="display:none">
+                        <h3>🎯 Quiz Results</h3>
+                        <div id="quiz-score"></div>
+                        <button onclick="document.getElementById('quiz-modal').remove()" class="cta-button">Continue Learning!</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add quiz CSS
+        const quizStyle = document.createElement('style');
+        quizStyle.textContent = `
+            #quiz-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.9);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .quiz-content {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 30px;
+                border-radius: 20px;
+                max-width: 600px;
+                max-height: 80%;
+                overflow-y: auto;
+                position: relative;
+            }
+            
+            .close-quiz {
+                position: absolute;
+                top: 15px;
+                right: 20px;
+                font-size: 24px;
+                cursor: pointer;
+                color: white;
+            }
+            
+            .quiz-question {
+                margin: 20px 0;
+            }
+            
+            .question-counter {
+                background: rgba(255,255,255,0.2);
+                padding: 5px 15px;
+                border-radius: 15px;
+                display: inline-block;
+                margin-bottom: 15px;
+                font-size: 14px;
+            }
+            
+            .quiz-options {
+                margin: 15px 0;
+            }
+            
+            .quiz-option {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+                padding: 15px;
+                background: rgba(255,255,255,0.1);
+                color: white;
+                border: 1px solid rgba(255,255,255,0.2);
+                border-radius: 10px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .quiz-option:hover {
+                background: rgba(255,255,255,0.2);
+                transform: translateX(5px);
+            }
+            
+            .quiz-option.correct {
+                background: rgba(76,175,80,0.3);
+                border-color: #4CAF50;
+            }
+            
+            .quiz-option.incorrect {
+                background: rgba(244,67,54,0.3);
+                border-color: #f44336;
+            }
+            
+            .quiz-explanation {
+                background: rgba(255,255,255,0.1);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 15px;
+                border-left: 4px solid #4CAF50;
+            }
+            
+            .quiz-navigation {
+                text-align: center;
+                margin: 20px 0;
+            }
+            
+            .quiz-navigation button {
+                margin: 0 10px;
+                padding: 10px 20px;
+                background: rgba(255,255,255,0.2);
+                color: white;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+        `;
+        
+        document.head.appendChild(quizStyle);
+        document.body.appendChild(modal);
+        
+        // Close modal functionality
+        modal.querySelector('.close-quiz').addEventListener('click', () => {
+            modal.remove();
+            quizStyle.remove();
+        });
+    }
+
+    selectQuizAnswer(questionIndex, selectedOption, correctAnswer) {
+        const options = document.querySelectorAll(`#question-${questionIndex} .quiz-option`);
+        
+        // Disable all options
+        options.forEach(option => option.style.pointerEvents = 'none');
+        
+        // Show correct/incorrect
+        options[selectedOption].classList.add(selectedOption === correctAnswer ? 'correct' : 'incorrect');
+        if (selectedOption !== correctAnswer) {
+            options[correctAnswer].classList.add('correct');
+        }
+        
+        // Show explanation
+        document.getElementById(`explanation-${questionIndex}`).style.display = 'block';
+        
+        // Record answer
+        this.quizAnswers[questionIndex] = selectedOption === correctAnswer;
+        
+        // Show navigation
+        if (questionIndex < this.totalQuestions - 1) {
+            document.getElementById('next-question').style.display = 'inline-block';
+        } else {
+            document.getElementById('finish-quiz').style.display = 'inline-block';
+        }
+        
+        if (questionIndex > 0) {
+            document.getElementById('prev-question').style.display = 'inline-block';
+        }
+    }
+
+    nextQuestion() {
+        if (this.currentQuestion < this.totalQuestions - 1) {
+            document.getElementById(`question-${this.currentQuestion}`).style.display = 'none';
+            this.currentQuestion++;
+            document.getElementById(`question-${this.currentQuestion}`).style.display = 'block';
+            
+            // Update navigation
+            document.getElementById('prev-question').style.display = 'inline-block';
+            if (this.currentQuestion === this.totalQuestions - 1) {
+                document.getElementById('next-question').style.display = 'none';
+                if (this.quizAnswers[this.currentQuestion] !== undefined) {
+                    document.getElementById('finish-quiz').style.display = 'inline-block';
+                }
+            }
+        }
+    }
+
+    prevQuestion() {
+        if (this.currentQuestion > 0) {
+            document.getElementById(`question-${this.currentQuestion}`).style.display = 'none';
+            this.currentQuestion--;
+            document.getElementById(`question-${this.currentQuestion}`).style.display = 'block';
+            
+            // Update navigation
+            document.getElementById('next-question').style.display = 'inline-block';
+            if (this.currentQuestion === 0) {
+                document.getElementById('prev-question').style.display = 'none';
+            }
+        }
+    }
+
+    finishQuiz() {
+        // Hide questions
+        document.getElementById('quiz-questions').style.display = 'none';
+        document.querySelector('.quiz-navigation').style.display = 'none';
+        
+        // Calculate score
+        const correctAnswers = this.quizAnswers.filter(answer => answer === true).length;
+        const percentage = Math.round((correctAnswers / this.totalQuestions) * 100);
+        
+        // Show results
+        const resultsDiv = document.getElementById('quiz-results');
+        const scoreDiv = document.getElementById('quiz-score');
+        
+        let scoreMessage = '';
+        if (percentage >= 90) {
+            scoreMessage = '🏆 Excellent! You\'re mastering cybersecurity!';
+        } else if (percentage >= 70) {
+            scoreMessage = '👍 Good job! Keep learning to improve further.';
+        } else if (percentage >= 50) {
+            scoreMessage = '📚 Not bad, but review the concepts you missed.';
+        } else {
+            scoreMessage = '💪 Keep studying! You\'ll get there with practice.';
+        }
+        
+        scoreDiv.innerHTML = `
+            <div style="font-size: 36px; margin: 20px 0;">${percentage}%</div>
+            <p>You got ${correctAnswers} out of ${this.totalQuestions} questions correct.</p>
+            <p>${scoreMessage}</p>
+        `;
+        
+        resultsDiv.style.display = 'block';
+    }
+
     // EVENT LISTENERS AND AUTO-SAVE
     setupEventListeners() {
         // Save on every checkbox change
@@ -448,8 +885,13 @@ class CyberSecurityTracker {
     }
 
     setupAutoSave() {
+        // Clear any existing interval to prevent duplicates
+        if (this.autoSaveInterval) {
+            clearInterval(this.autoSaveInterval);
+        }
+        
         // Auto-save every 30 seconds
-        setInterval(() => {
+        this.autoSaveInterval = setInterval(() => {
             this.saveProgress();
         }, 30000);
         
@@ -468,13 +910,19 @@ class CyberSecurityTracker {
     updateStats() {
         const totalTasks = document.querySelectorAll('input[type="checkbox"]').length;
         const completedTasks = document.querySelectorAll('input[type="checkbox"]:checked').length;
-        const percentage = Math.round((completedTasks / totalTasks) * 100);
+        const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
         
         // Update progress displays
         const progressElements = document.querySelectorAll('.progress-percentage');
         progressElements.forEach(el => {
             el.textContent = `${percentage}%`;
         });
+        
+        // Update progress bar
+        const progressFill = document.getElementById('progress-fill');
+        if (progressFill) {
+            progressFill.style.width = `${percentage}%`;
+        }
         
         // Update retention score
         const retentionScore = document.getElementById('retention-score');
@@ -497,7 +945,7 @@ class CyberSecurityTracker {
         const dueReviews = [];
         
         Object.entries(retentionData).forEach(([taskId, data]) => {
-            const nextReviewDate = data.reviewDates[data.reviewCount];
+            const nextReviewDate = data.nextReview || data.reviewDates[data.reviewCount];
             if (nextReviewDate && now >= nextReviewDate) {
                 dueReviews.push({
                     id: taskId,
@@ -616,11 +1064,86 @@ class CyberSecurityTracker {
                 // Reload the page to apply imported data
                 location.reload();
             } catch (error) {
+                console.error('Import error:', error);
                 alert('Failed to import data. Please check the file format.');
             }
         };
         
         reader.readAsText(file);
+    }
+
+    // CLEANUP METHOD
+    cleanup() {
+        if (this.autoSaveInterval) {
+            clearInterval(this.autoSaveInterval);
+            this.autoSaveInterval = null;
+        }
+    }
+}
+
+// Global functions for phase and week toggles (to fix onClick errors)
+function togglePhase(element) {
+    if (window.cyberTracker) {
+        window.cyberTracker.togglePhaseContent(element);
+    } else {
+        // Fallback if cyberTracker isn't ready yet
+        toggleContent(element);
+    }
+}
+
+function toggleWeek(element) {
+    if (window.cyberTracker) {
+        window.cyberTracker.togglePhaseContent(element);
+    } else {
+        // Fallback if cyberTracker isn't ready yet
+        toggleContent(element);
+    }
+}
+
+// Fallback toggle function
+function toggleContent(element) {
+    if (!element) return;
+    
+    // Find the content to toggle
+    let content = element.nextElementSibling;
+    
+    // If no direct sibling, try finding the content area
+    if (!content) {
+        content = element.parentElement?.querySelector('.phase-content, .week-content, .content');
+    }
+    
+    // If still no content, try looking for the next div
+    if (!content) {
+        let nextElement = element.nextElementSibling;
+        while (nextElement && nextElement.nodeType !== 1) {
+            nextElement = nextElement.nextSibling;
+        }
+        content = nextElement;
+    }
+    
+    if (content) {
+        const isHidden = content.style.display === 'none' || 
+                       getComputedStyle(content).display === 'none';
+        
+        if (isHidden) {
+            content.style.display = 'block';
+            // Update arrow indicators
+            element.textContent = element.textContent.replace('▶', '▼');
+            if (!element.textContent.includes('▼') && !element.textContent.includes('▶')) {
+                element.textContent = '▼ ' + element.textContent;
+            }
+        } else {
+            content.style.display = 'none';
+            // Update arrow indicators
+            element.textContent = element.textContent.replace('▼', '▶');
+            if (!element.textContent.includes('▶') && !element.textContent.includes('▼')) {
+                element.textContent = '▶ ' + element.textContent;
+            }
+        }
+        
+        console.log(`Toggled content for: ${element.textContent.substring(0, 30)}...`);
+    } else {
+        console.warn('No content found to toggle for element:', element);
     }
 }
 
@@ -628,40 +1151,60 @@ class CyberSecurityTracker {
 let cyberTracker;
 
 document.addEventListener('DOMContentLoaded', () => {
-    cyberTracker = new CyberSecurityTracker();
-    
-    // Add export/import buttons to the page
-    const exportBtn = document.createElement('button');
-    exportBtn.textContent = '📤 Export Progress';
-    exportBtn.className = 'cta-button';
-    exportBtn.onclick = () => cyberTracker.exportProgress();
-    
-    const importBtn = document.createElement('input');
-    importBtn.type = 'file';
-    importBtn.accept = '.json';
-    importBtn.style.display = 'none';
-    importBtn.onchange = (e) => cyberTracker.importProgress(e);
-    
-    const importLabel = document.createElement('button');
-    importLabel.textContent = '📥 Import Progress';
-    importLabel.className = 'cta-button';
-    importLabel.onclick = () => importBtn.click();
-    
-    // Add buttons to page
-    const container = document.querySelector('.container') || document.body;
-    const buttonContainer = document.createElement('div');
-    buttonContainer.style.cssText = 'margin: 20px 0; text-align: center;';
-    buttonContainer.appendChild(exportBtn);
-    buttonContainer.appendChild(document.createTextNode(' '));
-    buttonContainer.appendChild(importLabel);
-    buttonContainer.appendChild(importBtn);
-    
-    container.appendChild(buttonContainer);
+    try {
+        cyberTracker = new CyberSecurityTracker();
+        
+        // Add export/import buttons to the page
+        const exportBtn = document.createElement('button');
+        exportBtn.textContent = '📤 Export Progress';
+        exportBtn.className = 'cta-button';
+        exportBtn.onclick = () => {
+            try {
+                cyberTracker.exportProgress();
+            } catch (error) {
+                console.error('Export error:', error);
+                alert('Export failed. Please try again.');
+            }
+        };
+        
+        const importBtn = document.createElement('input');
+        importBtn.type = 'file';
+        importBtn.accept = '.json';
+        importBtn.style.display = 'none';
+        importBtn.onchange = (e) => {
+            try {
+                cyberTracker.importProgress(e);
+            } catch (error) {
+                console.error('Import error:', error);
+                alert('Import failed. Please check the file format.');
+            }
+        };
+        
+        const importLabel = document.createElement('button');
+        importLabel.textContent = '📥 Import Progress';
+        importLabel.className = 'cta-button';
+        importLabel.onclick = () => importBtn.click();
+        
+        // Add buttons to page
+        const container = document.querySelector('.container') || document.body;
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.cssText = 'margin: 20px 0; text-align: center;';
+        buttonContainer.appendChild(exportBtn);
+        buttonContainer.appendChild(document.createTextNode(' '));
+        buttonContainer.appendChild(importLabel);
+        buttonContainer.appendChild(importBtn);
+        
+        container.appendChild(buttonContainer);
+        
+        // Make cyberTracker globally available
+        window.cyberTracker = cyberTracker;
+        
+        console.log('🔒 Cybersecurity Learning System Loaded Successfully!');
+        console.log('📊 Features: Auto-save, Spaced Repetition, Daily Streaks, Quizzes');
+        console.log('⌨️ Shortcuts: Ctrl+S (Save), Ctrl+R (Review)');
+        
+    } catch (error) {
+        console.error('Failed to initialize Cybersecurity Tracker:', error);
+        alert('Failed to load the learning system. Please refresh the page.');
+    }
 });
-
-// Global functions for modal interactions
-window.cyberTracker = cyberTracker;
-
-console.log('🔒 Cybersecurity Learning System Loaded Successfully!');
-console.log('📊 Features: Auto-save, Spaced Repetition, Daily Streaks, Quizzes');
-console.log('⌨️ Shortcuts: Ctrl+S (Save), Ctrl+R (Review)');

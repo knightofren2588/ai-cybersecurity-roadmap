@@ -8,984 +8,459 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <header class="hero">
             <h1>🔒 Fast-Track Cybersecurity Roadmap</h1>
-            <p>From Zero to Ethical Hacker in 14 Weeks • 100% Hands-On Labs • ADHD-Optimized</p>
-            <button class="download-btn" onclick="downloadProgress()">💾 Export Progress</button>
-            <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importProgress(event)">
-            <button class="download-btn" onclick="document.getElementById('import-file').click()">📁 Import Progress</button>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-number" id="tasks-done">0</div>
-                <div class="stat-label">Tasks Completed</div>
+            <p class="hero-subtitle">14 weeks to Security+ certification and cybersecurity career</p>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-text">
+                    <span class="progress-percentage">0%</span> Complete
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">14</div>
-                <div class="stat-label">Weeks Total</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">6</div>
-                <div class="stat-label">Hands-On Projects</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">$370</div>
-                <div class="stat-label">Security+ Cert Cost</div>
-            </div>
-        </div>
-        
-        <div class="focus-today">
-            <h2>🎯 Today's Focus</h2>
-            <div class="today-task">
-                <strong>Start Here:</strong> Create TryHackMe account and complete first 2 beginner rooms (2 hours total). Learn by breaking things immediately!
-            </div>
-            <div class="today-task">
-                <strong>Tomorrow:</strong> Continue with basic networking concepts while practicing on live vulnerable machines.
-            </div>
-        </div>
-        
-        <!-- Phase 1: Foundation + First Hack -->
-        <div class="phase">
-            <div class="phase-header" onclick="togglePhase(this)">
-                <h2>Phase 1: Foundation + First Hack (Weeks 1-4)</h2>
-                <div class="phase-summary">Learn security basics while performing your first ethical hacks</div>
-            </div>
+        </header>
+
+        <!-- Phase 1: Foundation (Weeks 1-4) -->
+        <div class="phase-container">
+            <h2 class="phase-header" onclick="togglePhase(this)">▼ Phase 1: Foundation (Weeks 1-4)</h2>
             <div class="phase-content">
                 
                 <!-- Week 1 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 1: Cybersecurity Fundamentals</div>
-                        <div class="week-desc">Learn basic security concepts through hands-on labs</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">8-10 hours</span>
-                            <span class="project-badge">TryHackMe Labs</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 1: Cybersecurity Fundamentals</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Create TryHackMe Account</div>
-                                    <div class="task-desc">Sign up for the best beginner-friendly hacking platform. Complete registration and profile setup.</div>
-                                    <a href="https://tryhackme.com" class="task-link" target="_blank">→ Join TryHackMe</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete "Pre Security" Learning Path</div>
-                                    <div class="task-desc">Perfect introduction to cybersecurity. Learn networking, web apps, and Linux basics through interactive rooms.</div>
-                                    <a href="https://tryhackme.com/path/outline/presecurity" class="task-link" target="_blank">→ Start Pre Security</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete First 3 Beginner Rooms</div>
-                                    <div class="task-desc">OpenVPN, Welcome, and Tutorial rooms. Get comfortable with the platform and basic tools.</div>
-                                    <a href="https://tryhackme.com/room/welcome" class="task-link" target="_blank">→ Welcome Room</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn Basic Linux Commands</div>
-                                    <div class="task-desc">Essential for cybersecurity. Complete Linux Fundamentals rooms on TryHackMe.</div>
-                                    <a href="https://tryhackme.com/room/linuxfundamentalspart1" class="task-link" target="_blank">→ Linux Fundamentals</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">CIA Triad (Confidentiality, Integrity, Availability)</div>
-                                <div class="concept-item">Basic Networking (IP, Ports, Protocols)</div>
-                                <div class="concept-item">Linux Command Line</div>
-                                <div class="concept-item">Web Application Basics</div>
-                                <div class="concept-item">Virtual Machines & VPNs</div>
-                                <div class="concept-item">Ethical Hacking Methodology</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Understand basic cybersecurity concepts and start hands-on practice</p>
+                            <p><strong>Time:</strong> 10-15 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w1t1"> Create TryHackMe account (free)</li>
+                            <li><input type="checkbox" id="w1t2"> Complete "Pre Security" path introduction</li>
+                            <li><input type="checkbox" id="w1t3"> Learn CIA Triad (Confidentiality, Integrity, Availability)</li>
+                            <li><input type="checkbox" id="w1t4"> Complete "Network Fundamentals" room</li>
+                            <li><input type="checkbox" id="w1t5"> Understand TCP/IP basics</li>
+                            <li><input type="checkbox" id="w1t6"> Learn about common network ports (80, 443, 22, 21)</li>
+                            <li><input type="checkbox" id="w1t7"> Complete "Linux Fundamentals" room</li>
+                            <li><input type="checkbox" id="w1t8"> Practice basic Linux commands (ls, cd, cat, grep)</li>
+                            <li><input type="checkbox" id="w1t9"> Complete "Windows Fundamentals" room</li>
+                            <li><input type="checkbox" id="w1t10"> Set up virtual lab environment (VirtualBox + Kali Linux)</li>
+                        </ul>
                     </div>
                 </div>
-                
+
                 <!-- Week 2 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 2: Network Security & Reconnaissance</div>
-                        <div class="week-desc">Learn to gather information and understand network vulnerabilities</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">10-12 hours</span>
-                            <span class="project-badge">Network Scanning</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 2: Network Security Basics</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete "Nmap" Room on TryHackMe</div>
-                                    <div class="task-desc">Learn the most important network scanning tool. Master port scanning and service detection.</div>
-                                    <a href="https://tryhackme.com/room/furthernmap" class="task-link" target="_blank">→ Nmap Room</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn Network Reconnaissance</div>
-                                    <div class="task-desc">Complete "Google Dorking" and "Shodan.io" rooms. Learn to gather intelligence legally.</div>
-                                    <a href="https://tryhackme.com/room/googledorking" class="task-link" target="_blank">→ Google Dorking</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice Subdomain Enumeration</div>
-                                    <div class="task-desc">Learn to find hidden parts of websites. Use tools like gobuster and dirbuster.</div>
-                                    <a href="https://tryhackme.com/room/subdomainenumeration" class="task-link" target="_blank">→ Subdomain Enumeration</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete First CTF Challenge</div>
-                                    <div class="task-desc">Try an easy Capture The Flag challenge to apply what you've learned. Start with "Basic Pentesting" room.</div>
-                                    <a href="https://tryhackme.com/room/basicpentestingjt" class="task-link" target="_blank">→ Basic Pentesting CTF</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Port Scanning & Service Detection</div>
-                                <div class="concept-item">OSINT (Open Source Intelligence)</div>
-                                <div class="concept-item">Subdomain & Directory Enumeration</div>
-                                <div class="concept-item">Network Protocols (TCP/UDP)</div>
-                                <div class="concept-item">Information Gathering Ethics</div>
-                                <div class="concept-item">CTF Problem-Solving</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Learn network security fundamentals and scanning techniques</p>
+                            <p><strong>Time:</strong> 12-15 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w2t1"> Complete "Network Security" room on TryHackMe</li>
+                            <li><input type="checkbox" id="w2t2"> Learn about firewalls and how they work</li>
+                            <li><input type="checkbox" id="w2t3"> Understand VPNs and encryption basics</li>
+                            <li><input type="checkbox" id="w2t4"> Complete "Nmap" room - learn network scanning</li>
+                            <li><input type="checkbox" id="w2t5"> Practice Nmap commands (ping sweep, port scan)</li>
+                            <li><input type="checkbox" id="w2t6"> Complete "Wireshark" room - packet analysis</li>
+                            <li><input type="checkbox" id="w2t7"> Analyze sample network traffic</li>
+                            <li><input type="checkbox" id="w2t8"> Learn about common network protocols (HTTP, HTTPS, SSH, FTP)</li>
+                            <li><input type="checkbox" id="w2t9"> Complete "Burp Suite" basics room</li>
+                            <li><input type="checkbox" id="w2t10"> Practice intercepting HTTP requests</li>
+                        </ul>
                     </div>
                 </div>
-                
+
                 <!-- Week 3 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 3: Web Application Security</div>
-                        <div class="week-desc">Learn to find and exploit web vulnerabilities</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">12-15 hours</span>
-                            <span class="project-badge">Web Exploitation</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 3: Web Application Security</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete OWASP Top 10 Rooms</div>
-                                    <div class="task-desc">Learn the most common web vulnerabilities. Essential knowledge for any security professional.</div>
-                                    <a href="https://tryhackme.com/room/owasptop10" class="task-link" target="_blank">→ OWASP Top 10</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn SQL Injection</div>
-                                    <div class="task-desc">Master the most dangerous web vulnerability. Complete SQLi rooms and practice on vulnerable apps.</div>
-                                    <a href="https://tryhackme.com/room/sqlinjectionlm" class="task-link" target="_blank">→ SQL Injection</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice Cross-Site Scripting (XSS)</div>
-                                    <div class="task-desc">Learn to exploit client-side vulnerabilities. Understand reflected, stored, and DOM-based XSS.</div>
-                                    <a href="https://tryhackme.com/room/xss" class="task-link" target="_blank">→ XSS Basics</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Install Burp Suite Community</div>
-                                    <div class="task-desc">Set up the essential web application testing tool. Learn to intercept and modify web traffic.</div>
-                                    <a href="https://portswigger.net/burp/communitydownload" class="task-link" target="_blank">→ Download Burp Suite</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">OWASP Top 10 Vulnerabilities</div>
-                                <div class="concept-item">SQL Injection Techniques</div>
-                                <div class="concept-item">Cross-Site Scripting (XSS)</div>
-                                <div class="concept-item">Web Proxy Tools (Burp Suite)</div>
-                                <div class="concept-item">HTTP Protocol Understanding</div>
-                                <div class="concept-item">Input Validation & Sanitization</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Understand web vulnerabilities and basic exploitation</p>
+                            <p><strong>Time:</strong> 12-15 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w3t1"> Complete "OWASP Top 10" room</li>
+                            <li><input type="checkbox" id="w3t2"> Learn about SQL injection attacks</li>
+                            <li><input type="checkbox" id="w3t3"> Practice SQL injection on vulnerable apps</li>
+                            <li><input type="checkbox" id="w3t4"> Understand Cross-Site Scripting (XSS)</li>
+                            <li><input type="checkbox" id="w3t5"> Complete XSS challenges</li>
+                            <li><input type="checkbox" id="w3t6"> Learn about Cross-Site Request Forgery (CSRF)</li>
+                            <li><input type="checkbox" id="w3t7"> Complete "Web Fundamentals" path</li>
+                            <li><input type="checkbox" id="w3t8"> Practice with DVWA (Damn Vulnerable Web App)</li>
+                            <li><input type="checkbox" id="w3t9"> Learn about session management vulnerabilities</li>
+                            <li><input type="checkbox" id="w3t10"> Complete "Web Security" challenges</li>
+                        </ul>
                     </div>
                 </div>
-                
+
                 <!-- Week 4 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 4: Linux Exploitation & Privilege Escalation</div>
-                        <div class="week-desc">Learn to compromise and escalate privileges on Linux systems</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">15-18 hours</span>
-                            <span class="project-badge">System Exploitation</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 4: Cryptography & Authentication</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete Linux Privilege Escalation Room</div>
-                                    <div class="task-desc">Learn to escalate from low-privileged user to root. Essential skill for penetration testing.</div>
-                                    <a href="https://tryhackme.com/room/linuxprivesc" class="task-link" target="_blank">→ Linux PrivEsc</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn Metasploit Framework</div>
-                                    <div class="task-desc">Master the most popular exploitation framework. Learn to find, modify, and execute exploits.</div>
-                                    <a href="https://tryhackme.com/room/metasploitintro" class="task-link" target="_blank">→ Metasploit Intro</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice Reverse Shells</div>
-                                    <div class="task-desc">Learn to establish remote connections to compromised systems. Essential for maintaining access.</div>
-                                    <a href="https://tryhackme.com/room/commonattacks" class="task-link" target="_blank">→ Common Attacks</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete First Full Machine</div>
-                                    <div class="task-desc">Put it all together! Complete a beginner-friendly machine from start to finish. Try "Basic Pentesting" or "Blue".</div>
-                                    <a href="https://tryhackme.com/room/blue" class="task-link" target="_blank">→ Blue Machine</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Linux Privilege Escalation</div>
-                                <div class="concept-item">Exploitation Frameworks (Metasploit)</div>
-                                <div class="concept-item">Reverse Shells & Payloads</div>
-                                <div class="concept-item">File Transfer Techniques</div>
-                                <div class="concept-item">Persistence Mechanisms</div>
-                                <div class="concept-item">Complete Attack Chain</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Master cryptography basics and authentication mechanisms</p>
+                            <p><strong>Time:</strong> 12-15 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w4t1"> Complete "Cryptography" room on TryHackMe</li>
+                            <li><input type="checkbox" id="w4t2"> Learn symmetric vs asymmetric encryption</li>
+                            <li><input type="checkbox" id="w4t3"> Understand hashing (MD5, SHA-1, SHA-256)</li>
+                            <li><input type="checkbox" id="w4t4"> Practice hash cracking with John the Ripper</li>
+                            <li><input type="checkbox" id="w4t5"> Complete "Hash Cracking" challenges</li>
+                            <li><input type="checkbox" id="w4t6"> Learn about digital certificates and PKI</li>
+                            <li><input type="checkbox" id="w4t7"> Understand multi-factor authentication (MFA)</li>
+                            <li><input type="checkbox" id="w4t8"> Practice password attacks (dictionary, brute force)</li>
+                            <li><input type="checkbox" id="w4t9"> Complete "Authentication Bypass" room</li>
+                            <li><input type="checkbox" id="w4t10"> Learn about secure password storage (bcrypt, scrypt)</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Phase 2: Intermediate Exploitation -->
-        <div class="phase">
-            <div class="phase-header" onclick="togglePhase(this)">
-                <h2>Phase 2: Intermediate Exploitation (Weeks 5-8)</h2>
-                <div class="phase-summary">Advanced techniques and Windows exploitation</div>
-            </div>
+
+        <!-- Phase 2: Intermediate Skills (Weeks 5-8) -->
+        <div class="phase-container">
+            <h2 class="phase-header" onclick="togglePhase(this)">▼ Phase 2: Intermediate Skills (Weeks 5-8)</h2>
             <div class="phase-content">
                 
                 <!-- Week 5 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 5: Windows Security & Active Directory</div>
-                        <div class="week-desc">Learn Windows-specific attack techniques</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">15-18 hours</span>
-                            <span class="project-badge">Windows Exploitation</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 5: System Administration & Hardening</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete Windows Fundamentals</div>
-                                    <div class="task-desc">Understand Windows architecture, services, and security mechanisms before attacking them.</div>
-                                    <a href="https://tryhackme.com/room/windowsfundamentals1xbx" class="task-link" target="_blank">→ Windows Fundamentals</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn Active Directory Basics</div>
-                                    <div class="task-desc">Understand enterprise Windows environments. Critical for corporate penetration testing.</div>
-                                    <a href="https://tryhackme.com/room/activedirectorybasics" class="task-link" target="_blank">→ Active Directory Basics</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice Windows Privilege Escalation</div>
-                                    <div class="task-desc">Learn Windows-specific privilege escalation techniques. Different from Linux but equally important.</div>
-                                    <a href="https://tryhackme.com/room/windows10privesc" class="task-link" target="_blank">→ Windows PrivEsc</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete Blue Team Fundamentals</div>
-                                    <div class="task-desc">Understand the defender's perspective. Learn incident response and digital forensics basics.</div>
-                                    <a href="https://tryhackme.com/room/btintroductionformatting" class="task-link" target="_blank">→ Blue Team Intro</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Windows Architecture & Services</div>
-                                <div class="concept-item">Active Directory Structure</div>
-                                <div class="concept-item">Windows Privilege Escalation</div>
-                                <div class="concept-item">Blue Team Methodologies</div>
-                                <div class="concept-item">Digital Forensics Basics</div>
-                                <div class="concept-item">Incident Response</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Learn system security and hardening techniques</p>
+                            <p><strong>Time:</strong> 12-15 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w5t1"> Complete "Active Directory Basics" room</li>
+                            <li><input type="checkbox" id="w5t2"> Learn Windows security policies</li>
+                            <li><input type="checkbox" id="w5t3"> Practice Linux system hardening</li>
+                            <li><input type="checkbox" id="w5t4"> Complete "Linux Privilege Escalation" room</li>
+                            <li><input type="checkbox" id="w5t5"> Learn about access controls (RBAC, DAC, MAC)</li>
+                            <li><input type="checkbox" id="w5t6"> Complete "Windows Security" room</li>
+                            <li><input type="checkbox" id="w5t7"> Practice file permissions and ACLs</li>
+                            <li><input type="checkbox" id="w5t8"> Learn about system monitoring and logging</li>
+                            <li><input type="checkbox" id="w5t9"> Complete "System Security" challenges</li>
+                            <li><input type="checkbox" id="w5t10"> Set up basic intrusion detection (OSSEC)</li>
+                        </ul>
                     </div>
                 </div>
-                
+
                 <!-- Week 6 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 6: Cryptography & Steganography</div>
-                        <div class="week-desc">Learn encryption, decryption, and hidden data techniques</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">12-15 hours</span>
-                            <span class="project-badge">Crypto Challenges</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 6: Penetration Testing Basics</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete Cryptography Fundamentals</div>
-                                    <div class="task-desc">Learn encryption basics, hashing, and digital signatures. Essential for understanding security.</div>
-                                    <a href="https://tryhackme.com/room/encryptioncrypto101" class="task-link" target="_blank">→ Crypto 101</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn Hash Cracking</div>
-                                    <div class="task-desc">Practice cracking passwords using John the Ripper and hashcat. Common penetration testing task.</div>
-                                    <a href="https://tryhackme.com/room/johntheripper0" class="task-link" target="_blank">→ John the Ripper</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice Steganography</div>
-                                    <div class="task-desc">Learn to find hidden data in images, audio, and other files. Common in CTF challenges.</div>
-                                    <a href="https://tryhackme.com/room/steganography" class="task-link" target="_blank">→ Steganography</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete Intermediate CTFs</div>
-                                    <div class="task-desc">Apply cryptography skills in capture the flag challenges. Try "Agent Sudo" and "Pickle Rick".</div>
-                                    <a href="https://tryhackme.com/room/agentsudoctf" class="task-link" target="_blank">→ Agent Sudo CTF</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Symmetric & Asymmetric Encryption</div>
-                                <div class="concept-item">Hashing Algorithms</div>
-                                <div class="concept-item">Password Cracking Techniques</div>
-                                <div class="concept-item">Steganography Tools & Methods</div>
-                                <div class="concept-item">Digital Signatures & PKI</div>
-                                <div class="concept-item">CTF Problem-Solving Skills</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Learn ethical hacking and penetration testing methodology</p>
+                            <p><strong>Time:</strong> 12-15 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w6t1"> Complete "Pentesting Fundamentals" path</li>
+                            <li><input type="checkbox" id="w6t2"> Learn the penetration testing methodology</li>
+                            <li><input type="checkbox" id="w6t3"> Practice reconnaissance techniques</li>
+                            <li><input type="checkbox" id="w6t4"> Complete "Metasploit" introduction room</li>
+                            <li><input type="checkbox" id="w6t5"> Learn basic exploit development concepts</li>
+                            <li><input type="checkbox" id="w6t6"> Complete "Basic Pentesting" room</li>
+                            <li><input type="checkbox" id="w6t7"> Practice vulnerability assessment</li>
+                            <li><input type="checkbox" id="w6t8"> Learn about social engineering basics</li>
+                            <li><input type="checkbox" id="w6t9"> Complete "Phishing" awareness room</li>
+                            <li><input type="checkbox" id="w6t10"> Write your first penetration test report</li>
+                        </ul>
                     </div>
                 </div>
-                
+
                 <!-- Week 7 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 7: Network Penetration Testing</div>
-                        <div class="week-desc">Advanced network attacks and lateral movement</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">18-20 hours</span>
-                            <span class="project-badge">Network Pentest</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 7: Incident Response & Forensics</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete Network Security Room</div>
-                                    <div class="task-desc">Learn advanced network scanning, exploitation, and post-exploitation techniques.</div>
-                                    <a href="https://tryhackme.com/room/networksecurityprotocols" class="task-link" target="_blank">→ Network Security</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn Lateral Movement Techniques</div>
-                                    <div class="task-desc">Practice moving through networks after initial compromise. Essential for real penetration tests.</div>
-                                    <a href="https://tryhackme.com/room/lateralmovementandpivoting" class="task-link" target="_blank">→ Lateral Movement</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice Pivoting & Tunneling</div>
-                                    <div class="task-desc">Learn to use compromised systems as stepping stones to reach other network segments.</div>
-                                    <a href="https://tryhackme.com/room/wreath" class="task-link" target="_blank">→ Wreath Network</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete Multi-Machine Network</div>
-                                    <div class="task-desc">Test your skills on a multi-machine environment. Practice complete network penetration testing.</div>
-                                    <a href="https://tryhackme.com/room/attacktivedirectory" class="task-link" target="_blank">→ Attacktive Directory</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Advanced Network Scanning</div>
-                                <div class="concept-item">Lateral Movement Techniques</div>
-                                <div class="concept-item">Network Pivoting & Tunneling</div>
-                                <div class="concept-item">Post-Exploitation Persistence</div>
-                                <div class="concept-item">Network Segmentation Bypass</div>
-                                <div class="concept-item">Multi-System Attack Chains</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Learn incident response procedures and digital forensics</p>
+                            <p><strong>Time:</strong> 12-15 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w7t1"> Complete "Incident Response" room</li>
+                            <li><input type="checkbox" id="w7t2"> Learn NIST incident response framework</li>
+                            <li><input type="checkbox" id="w7t3"> Practice malware analysis basics</li>
+                            <li><input type="checkbox" id="w7t4"> Complete "Digital Forensics" introduction</li>
+                            <li><input type="checkbox" id="w7t5"> Learn file system forensics</li>
+                            <li><input type="checkbox" id="w7t6"> Practice memory forensics with Volatility</li>
+                            <li><input type="checkbox" id="w7t7"> Complete "Forensics" challenges</li>
+                            <li><input type="checkbox" id="w7t8"> Learn about chain of custody</li>
+                            <li><input type="checkbox" id="w7t9"> Practice log analysis (SIEM basics)</li>
+                            <li><input type="checkbox" id="w7t10"> Complete "Blue Team" fundamentals</li>
+                        </ul>
                     </div>
                 </div>
-                
+
                 <!-- Week 8 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 8: Intermediate Challenges & CTFs</div>
-                        <div class="week-desc">Apply all learned skills in complex scenarios</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">20-25 hours</span>
-                            <span class="project-badge">Advanced CTFs</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 8: Advanced Machines & Real-World Practice</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete 5 Intermediate Machines</div>
-                                    <div class="task-desc">Challenge yourself with harder boxes. Try Kenobi, Steel Mountain, Mr. Robot, and others.</div>
-                                    <a href="https://tryhackme.com/room/kenobi" class="task-link" target="_blank">→ Kenobi Machine</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Join External CTF Competition</div>
-                                    <div class="task-desc">Test skills against real competition. Try PicoCTF, OverTheWire, or other beginner-friendly CTFs.</div>
-                                    <a href="https://picoctf.org" class="task-link" target="_blank">→ PicoCTF</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Document Your Methodology</div>
-                                    <div class="task-desc">Create writeups for your machine compromises. Essential for building your portfolio.</div>
-                                    <a href="https://github.com" class="task-link" target="_blank">→ Create GitHub Portfolio</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn Report Writing</div>
-                                    <div class="task-desc">Practice writing professional penetration testing reports. Critical skill for any security career.</div>
-                                    <a href="https://tryhackme.com/room/reportwritingforpenetrationtesters" class="task-link" target="_blank">→ Report Writing</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Complex Attack Chains</div>
-                                <div class="concept-item">CTF Competition Skills</div>
-                                <div class="concept-item">Technical Documentation</div>
-                                <div class="concept-item">Professional Report Writing</div>
-                                <div class="concept-item">Portfolio Development</div>
-                                <div class="concept-item">Problem-Solving Under Pressure</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Apply skills to realistic scenarios and challenging machines</p>
+                            <p><strong>Time:</strong> 15-20 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w8t1"> Complete 3 Easy-level TryHackMe machines</li>
+                            <li><input type="checkbox" id="w8t2"> Complete 2 Medium-level machines</li>
+                            <li><input type="checkbox" id="w8t3"> Write detailed writeups for each machine</li>
+                            <li><input type="checkbox" id="w8t4"> Complete "Blue" room (Windows forensics)</li>
+                            <li><input type="checkbox" id="w8t5"> Complete "Ice" room (Windows exploitation)</li>
+                            <li><input type="checkbox" id="w8t6"> Complete healthcare-themed security scenarios</li>
+                            <li><input type="checkbox" id="w8t7"> Practice network segmentation concepts</li>
+                            <li><input type="checkbox" id="w8t8"> Learn about HIPAA compliance basics</li>
+                            <li><input type="checkbox" id="w8t9"> Complete "Corporate" themed rooms</li>
+                            <li><input type="checkbox" id="w8t10"> Build your first cybersecurity portfolio</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Phase 3: Advanced Security & Certifications -->
-        <div class="phase">
-            <div class="phase-header" onclick="togglePhase(this)">
-                <h2>Phase 3: Advanced Security & Certifications (Weeks 9-11)</h2>
-                <div class="phase-summary">Prepare for Security+ and advanced techniques</div>
-            </div>
+
+        <!-- Phase 3: Advanced Security (Weeks 9-12) -->
+        <div class="phase-container">
+            <h2 class="phase-header" onclick="togglePhase(this)">▼ Phase 3: Advanced Security & Certification (Weeks 9-12)</h2>
             <div class="phase-content">
                 
                 <!-- Week 9 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 9: CompTIA Security+ Preparation</div>
-                        <div class="week-desc">Study for the industry-standard security certification</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">20-25 hours</span>
-                            <span class="project-badge">Security+ Study</span>
-                            <span class="free-badge">Study FREE / Exam $370</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 9: Security+ Certification Prep (Start)</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Get Security+ Study Materials</div>
-                                    <div class="task-desc">Download official exam objectives and use Professor Messer's free Security+ course.</div>
-                                    <a href="https://www.professormesser.com/security-plus/sy0-601-security-plus-course/" class="task-link" target="_blank">→ Free Security+ Course</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete Security+ Domain 1-3</div>
-                                    <div class="task-desc">Study Attacks/Threats, Architecture/Design, and Implementation. Take detailed notes.</div>
-                                    <a href="https://www.comptia.org/certifications/security" class="task-link" target="_blank">→ Security+ Exam Objectives</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice with TryHackMe Security+ Path</div>
-                                    <div class="task-desc">Reinforce Security+ concepts with hands-on practice. Perfect combination of theory and practice.</div>
-                                    <a href="https://tryhackme.com/path/outline/comptiapentest" class="task-link" target="_blank">→ CompTIA Path</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Take Practice Exams</div>
-                                    <div class="task-desc">Use free practice tests to identify weak areas. Aim for 85%+ score consistently.</div>
-                                    <a href="https://www.examcompass.com/comptia/security-plus-certification/free-security-plus-practice-tests" class="task-link" target="_blank">→ Free Practice Tests</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Risk Management & Governance</div>
-                                <div class="concept-item">Security Frameworks & Controls</div>
-                                <div class="concept-item">Identity & Access Management</div>
-                                <div class="concept-item">Incident Response Procedures</div>
-                                <div class="concept-item">Business Continuity & Disaster Recovery</div>
-                                <div class="concept-item">Compliance & Regulations</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Begin focused Security+ exam preparation</p>
+                            <p><strong>Time:</strong> 15-20 hours</p>
+                            <p><strong>Cost:</strong> $370 for exam voucher</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w9t1"> Purchase CompTIA Security+ SY0-601 study guide</li>
+                            <li><input type="checkbox" id="w9t2"> Complete Security+ Domain 1: Attacks, Threats, Vulnerabilities</li>
+                            <li><input type="checkbox" id="w9t3"> Complete Security+ Domain 2: Architecture and Design</li>
+                            <li><input type="checkbox" id="w9t4"> Take first practice exam (baseline score)</li>
+                            <li><input type="checkbox" id="w9t5"> Review weak areas from practice exam</li>
+                            <li><input type="checkbox" id="w9t6"> Complete advanced cryptography topics</li>
+                            <li><input type="checkbox" id="w9t7"> Learn about security frameworks (NIST, ISO 27001)</li>
+                            <li><input type="checkbox" id="w9t8"> Practice risk assessment calculations</li>
+                            <li><input type="checkbox" id="w9t9"> Complete "Risk Assessment" room on TryHackMe</li>
+                            <li><input type="checkbox" id="w9t10"> Create Security+ study schedule for remaining weeks</li>
+                        </ul>
                     </div>
                 </div>
-                
+
                 <!-- Week 10 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 10: Advanced Penetration Testing</div>
-                        <div class="week-desc">Master advanced exploitation techniques</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">20-25 hours</span>
-                            <span class="project-badge">Advanced Exploits</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 10: Advanced Threat Detection</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn Buffer Overflow Exploitation</div>
-                                    <div class="task-desc">Master this classic but important exploitation technique. Complete Buffer Overflow Prep room.</div>
-                                    <a href="https://tryhackme.com/room/bufferoverflowprep" class="task-link" target="_blank">→ Buffer Overflow</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice Advanced Web Exploitation</div>
-                                    <div class="task-desc">Learn Server-Side Template Injection, XXE, and other advanced web attacks.</div>
-                                    <a href="https://tryhackme.com/room/learnssti" class="task-link" target="_blank">→ Advanced Web Attacks</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete Red Team Fundamentals</div>
-                                    <div class="task-desc">Learn the difference between penetration testing and red team operations.</div>
-                                    <a href="https://tryhackme.com/room/redteamfundamentals" class="task-link" target="_blank">→ Red Team Fundamentals</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice Advanced Machines</div>
-                                    <div class="task-desc">Complete harder TryHackMe machines like Brainstorm, HackPark, and Internal.</div>
-                                    <a href="https://tryhackme.com/room/brainstorm" class="task-link" target="_blank">→ Advanced Machines</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Buffer Overflow Exploitation</div>
-                                <div class="concept-item">Advanced Web Attack Vectors</div>
-                                <div class="concept-item">Red Team vs. Penetration Testing</div>
-                                <div class="concept-item">Advanced Payload Development</div>
-                                <div class="concept-item">Exploit Development Basics</div>
-                                <div class="concept-item">Advanced Evasion Techniques</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Master advanced threat detection and security operations</p>
+                            <p><strong>Time:</strong> 15-20 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w10t1"> Complete Security+ Domain 3: Implementation</li>
+                            <li><input type="checkbox" id="w10t2"> Complete Security+ Domain 4: Operations and Incident Response</li>
+                            <li><input type="checkbox" id="w10t3"> Learn about SIEM tools (Splunk basics)</li>
+                            <li><input type="checkbox" id="w10t4"> Complete "SIEM" room on TryHackMe</li>
+                            <li><input type="checkbox" id="w10t5"> Practice log correlation and analysis</li>
+                            <li><input type="checkbox" id="w10t6"> Learn about threat intelligence</li>
+                            <li><input type="checkbox" id="w10t7"> Complete "Threat Intelligence" room</li>
+                            <li><input type="checkbox" id="w10t8"> Practice with YARA rules</li>
+                            <li><input type="checkbox" id="w10t9"> Learn about APT (Advanced Persistent Threats)</li>
+                            <li><input type="checkbox" id="w10t10"> Take second Security+ practice exam</li>
+                        </ul>
                     </div>
                 </div>
-                
+
                 <!-- Week 11 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 11: Professional Security Tools</div>
-                        <div class="week-desc">Learn industry-standard security tools and frameworks</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">18-20 hours</span>
-                            <span class="project-badge">Professional Tools</span>
-                            <span class="free-badge">Mostly FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 11: Security Frameworks & Compliance</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn MITRE ATT&CK Framework</div>
-                                    <div class="task-desc">Understand the industry-standard framework for categorizing adversary tactics and techniques.</div>
-                                    <a href="https://attack.mitre.org" class="task-link" target="_blank">→ MITRE ATT&CK</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice with Splunk</div>
-                                    <div class="task-desc">Learn the leading SIEM platform. Essential for blue team and security operations roles.</div>
-                                    <a href="https://tryhackme.com/room/splunk101" class="task-link" target="_blank">→ Splunk Basics</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Learn Wireshark Network Analysis</div>
-                                    <div class="task-desc">Master network packet analysis. Critical skill for incident response and forensics.</div>
-                                    <a href="https://tryhackme.com/room/wireshark" class="task-link" target="_blank">→ Wireshark</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete OSINT Investigations</div>
-                                    <div class="task-desc">Learn advanced open source intelligence gathering techniques for reconnaissance.</div>
-                                    <a href="https://tryhackme.com/room/ohsint" class="task-link" target="_blank">→ OSINT Practice</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">MITRE ATT&CK Framework</div>
-                                <div class="concept-item">SIEM & Log Analysis</div>
-                                <div class="concept-item">Network Packet Analysis</div>
-                                <div class="concept-item">Advanced OSINT Techniques</div>
-                                <div class="concept-item">Threat Hunting Methodology</div>
-                                <div class="concept-item">Security Operations Center (SOC)</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Understand enterprise security and compliance requirements</p>
+                            <p><strong>Time:</strong> 15-20 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w11t1"> Complete Security+ Domain 5: Governance, Risk, Compliance</li>
+                            <li><input type="checkbox" id="w11t2"> Learn MITRE ATT&CK framework</li>
+                            <li><input type="checkbox" id="w11t3"> Complete "MITRE" room on TryHackMe</li>
+                            <li><input type="checkbox" id="w11t4"> Study NIST Cybersecurity Framework</li>
+                            <li><input type="checkbox" id="w11t5"> Learn about compliance standards (PCI-DSS, HIPAA, SOX)</li>
+                            <li><input type="checkbox" id="w11t6"> Practice business continuity planning</li>
+                            <li><input type="checkbox" id="w11t7"> Complete "Governance" challenges</li>
+                            <li><input type="checkbox" id="w11t8"> Learn about security awareness training</li>
+                            <li><input type="checkbox" id="w11t9"> Complete third Security+ practice exam</li>
+                            <li><input type="checkbox" id="w11t10"> Schedule Security+ exam for Week 12</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Week 12 -->
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 12: Security+ Certification & Final Review</h3>
+                    <div class="week-content">
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Pass Security+ certification exam</p>
+                            <p><strong>Time:</strong> 20+ hours</p>
+                            <p><strong>Milestone:</strong> Earn Security+ certification! 🎉</p>
+                        </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w12t1"> Complete final Security+ review sessions</li>
+                            <li><input type="checkbox" id="w12t2"> Take 3+ full-length practice exams (aim for 85%+)</li>
+                            <li><input type="checkbox" id="w12t3"> Review all weak knowledge areas</li>
+                            <li><input type="checkbox" id="w12t4"> Complete Security+ performance-based question practice</li>
+                            <li><input type="checkbox" id="w12t5"> Take CompTIA Security+ SY0-601 exam</li>
+                            <li><input type="checkbox" id="w12t6"> Receive Security+ certification results</li>
+                            <li><input type="checkbox" id="w12t7"> Update LinkedIn with Security+ certification</li>
+                            <li><input type="checkbox" id="w12t8"> Complete advanced TryHackMe rooms for continued learning</li>
+                            <li><input type="checkbox" id="w12t9"> Build comprehensive cybersecurity resume</li>
+                            <li><input type="checkbox" id="w12t10"> Start applying for entry-level cybersecurity positions</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Phase 4: Career Launch -->
-        <div class="phase">
-            <div class="phase-header" onclick="togglePhase(this)">
-                <h2>Phase 4: Career Launch (Weeks 12-14)</h2>
-                <div class="phase-summary">Build portfolio and launch your cybersecurity career</div>
-            </div>
+
+        <!-- Phase 4: Career Launch (Weeks 13-14) -->
+        <div class="phase-container">
+            <h2 class="phase-header" onclick="togglePhase(this)">▼ Phase 4: Career Launch (Weeks 13-14)</h2>
             <div class="phase-content">
                 
-                <!-- Week 12 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 12: Portfolio & Certification</div>
-                        <div class="week-desc">Build professional portfolio and take Security+ exam</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">20-25 hours</span>
-                            <span class="project-badge">Portfolio Site</span>
-                            <span class="free-badge">Portfolio FREE / Exam $370</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Schedule Security+ Exam</div>
-                                    <div class="task-desc">Book your CompTIA Security+ exam. DoD 8570 approved certification opens many doors.</div>
-                                    <a href="https://www.comptia.org/certifications/security" class="task-link" target="_blank">→ Schedule Security+ Exam</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Create Professional Portfolio Website</div>
-                                    <div class="task-desc">Build a portfolio showcasing your CTF writeups, machine compromises, and security projects.</div>
-                                    <a href="https://pages.github.com" class="task-link" target="_blank">→ GitHub Pages</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Write Detailed CTF Writeups</div>
-                                    <div class="task-desc">Document your best machine compromises and CTF solutions. Show your methodology and thinking.</div>
-                                    <a href="https://medium.com" class="task-link" target="_blank">→ Publish on Medium</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Complete Final Security+ Review</div>
-                                    <div class="task-desc">Final cramming session before your exam. Review weak areas and take final practice tests.</div>
-                                    <a href="https://www.professormesser.com/security-plus/sy0-601-security-plus-course/" class="task-link" target="_blank">→ Final Review</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Professional Portfolio Development</div>
-                                <div class="concept-item">Technical Writing & Documentation</div>
-                                <div class="concept-item">Personal Branding in Cybersecurity</div>
-                                <div class="concept-item">Certification Exam Strategies</div>
-                                <div class="concept-item">Industry Networking</div>
-                                <div class="concept-item">Career Positioning</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
                 <!-- Week 13 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 13: Job Preparation & Applications</div>
-                        <div class="week-desc">Prepare for cybersecurity job applications and interviews</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">15-20 hours</span>
-                            <span class="project-badge">Job Applications</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 13: Job Search & Interview Prep</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Optimize LinkedIn Profile</div>
-                                    <div class="task-desc">Update LinkedIn with cybersecurity skills, projects, and Security+ certification. Connect with security professionals.</div>
-                                    <a href="https://linkedin.com" class="task-link" target="_blank">→ LinkedIn Profile</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Create Cybersecurity Resume</div>
-                                    <div class="task-desc">Build a security-focused resume highlighting your practical skills and hands-on experience.</div>
-                                    <a href="https://www.indeed.com/career-advice/resumes-cover-letters/cybersecurity-resume" class="task-link" target="_blank">→ Resume Guide</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Research Target Companies</div>
-                                    <div class="task-desc">Identify healthcare organizations, financial firms, and tech companies hiring entry-level security professionals.</div>
-                                    <a href="https://www.cyberseek.org/heatmap.html" class="task-link" target="_blank">→ Cybersecurity Job Market</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Practice Technical Interviews</div>
-                                    <div class="task-desc">Prepare for common cybersecurity interview questions and technical demonstrations.</div>
-                                    <a href="https://www.glassdoor.com/Interview/cybersecurity-interview-questions-SRCH_KO0,13.htm" class="task-link" target="_blank">→ Interview Questions</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Professional Networking</div>
-                                <div class="concept-item">Resume Optimization</div>
-                                <div class="concept-item">Job Market Research</div>
-                                <div class="concept-item">Interview Preparation</div>
-                                <div class="concept-item">Salary Negotiation</div>
-                                <div class="concept-item">Career Path Planning</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Launch cybersecurity job search campaign</p>
+                            <p><strong>Time:</strong> 15-20 hours</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w13t1"> Create professional cybersecurity resume</li>
+                            <li><input type="checkbox" id="w13t2"> Build LinkedIn profile highlighting Security+ cert</li>
+                            <li><input type="checkbox" id="w13t3"> Create GitHub portfolio with TryHackMe writeups</li>
+                            <li><input type="checkbox" id="w13t4"> Research cybersecurity positions at target companies</li>
+                            <li><input type="checkbox" id="w13t5"> Apply to 10+ entry-level cybersecurity jobs</li>
+                            <li><input type="checkbox" id="w13t6"> Prepare for common cybersecurity interview questions</li>
+                            <li><input type="checkbox" id="w13t7"> Practice technical interview scenarios</li>
+                            <li><input type="checkbox" id="w13t8"> Network with cybersecurity professionals</li>
+                            <li><input type="checkbox" id="w13t9"> Join cybersecurity communities (Discord, Reddit)</li>
+                            <li><input type="checkbox" id="w13t10"> Research salary expectations for your area</li>
+                        </ul>
                     </div>
                 </div>
-                
+
                 <!-- Week 14 -->
-                <div class="week">
-                    <div class="week-header" onclick="toggleWeek(this)">
-                        <div class="week-title">Week 14: Career Launch & Continuous Learning</div>
-                        <div class="week-desc">Launch your cybersecurity career and plan next steps</div>
-                        <div class="week-meta">
-                            <span class="time-estimate">15-20 hours</span>
-                            <span class="project-badge">Career Launch</span>
-                            <span class="free-badge">100% FREE</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
+                <div class="week-container">
+                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 14: Advanced Skills & Specialization</h3>
                     <div class="week-content">
-                        <ul class="task-list">
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Apply for Entry-Level Security Jobs</div>
-                                    <div class="task-desc">Start applying for SOC Analyst, Junior Penetration Tester, and Security Specialist positions.</div>
-                                    <a href="https://www.indeed.com/jobs?q=entry+level+cybersecurity" class="task-link" target="_blank">→ Security Jobs</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Join Cybersecurity Communities</div>
-                                    <div class="task-desc">Join ISACA, (ISC)², local security meetups, and online communities for networking and learning.</div>
-                                    <a href="https://www.meetup.com/topics/information-security/" class="task-link" target="_blank">→ Security Meetups</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Plan Next Certification Path</div>
-                                    <div class="task-desc">Choose your next certification: CEH ($1,199), OSCP ($1,499), or specialized certifications.</div>
-                                    <a href="https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/" class="task-link" target="_blank">→ CEH Certification</a>
-                                </div>
-                            </li>
-                            <li class="task-item">
-                                <div class="task-checkbox" onclick="toggleTask(this)"></div>
-                                <div class="task-content">
-                                    <div class="task-title">Continue Daily Practice</div>
-                                    <div class="task-desc">Set up daily practice routine with TryHackMe, HackTheBox, or other platforms to stay sharp.</div>
-                                    <a href="https://hackthebox.com" class="task-link" target="_blank">→ HackTheBox</a>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                        <div class="concepts-box">
-                            <div class="concepts-title">🧠 Key Concepts This Week</div>
-                            <div class="concepts-list">
-                                <div class="concept-item">Job Application Strategy</div>
-                                <div class="concept-item">Professional Community Engagement</div>
-                                <div class="concept-item">Continuous Learning Plan</div>
-                                <div class="concept-item">Career Advancement Planning</div>
-                                <div class="concept-item">Industry Trend Monitoring</div>
-                                <div class="concept-item">Skill Gap Analysis</div>
-                            </div>
+                        <div class="week-summary">
+                            <p><strong>Goal:</strong> Develop specialized skills and plan advanced certifications</p>
+                            <p><strong>Time:</strong> 15-20 hours</p>
+                            <p><strong>Achievement:</strong> Job-ready cybersecurity professional! 🚀</p>
                         </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="w14t1"> Choose specialization path (pentesting, SOC analyst, etc.)</li>
+                            <li><input type="checkbox" id="w14t2"> Complete advanced TryHackMe path for chosen specialization</li>
+                            <li><input type="checkbox" id="w14t3"> Research next certification (CEH, CISSP, OSCP)</li>
+                            <li><input type="checkbox" id="w14t4"> Complete 5+ Hard-level TryHackMe machines</li>
+                            <li><input type="checkbox" id="w14t5"> Continue job applications and interviews</li>
+                            <li><input type="checkbox" id="w14t6"> Build home lab for continued learning</li>
+                            <li><input type="checkbox" id="w14t7"> Contribute to cybersecurity community (blogs, forums)</li>
+                            <li><input type="checkbox" id="w14t8"> Attend virtual cybersecurity conferences</li>
+                            <li><input type="checkbox" id="w14t9"> Plan continuing education strategy</li>
+                            <li><input type="checkbox" id="w14t10"> Celebrate your cybersecurity career transformation! 🎉</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Career Outcomes Section -->
+        <div class="outcomes-section">
+            <h2>🎯 Your Cybersecurity Career Outcomes</h2>
+            <div class="outcomes-grid">
+                <div class="outcome-card">
+                    <h3>💼 Entry-Level Positions</h3>
+                    <ul>
+                        <li>SOC Analyst I: $45,000-65,000</li>
+                        <li>IT Security Specialist: $50,000-70,000</li>
+                        <li>Cybersecurity Analyst: $55,000-75,000</li>
+                        <li>Information Security Analyst: $60,000-80,000</li>
+                    </ul>
+                </div>
+                <div class="outcome-card">
+                    <h3>📈 Growth Potential</h3>
+                    <ul>
+                        <li>Senior SOC Analyst: $70,000-95,000</li>
+                        <li>Penetration Tester: $80,000-120,000</li>
+                        <li>Security Engineer: $90,000-130,000</li>
+                        <li>CISO (5-10 years): $150,000-300,000+</li>
+                    </ul>
+                </div>
+                <div class="outcome-card">
+                    <h3>🏥 Healthcare Focus</h3>
+                    <ul>
+                        <li>Healthcare Security Analyst</li>
+                        <li>HIPAA Compliance Specialist</li>
+                        <li>Medical Device Security</li>
+                        <li>Healthcare IT Security Manager</li>
+                    </ul>
+                </div>
+                <div class="outcome-card">
+                    <h3>🎓 Advanced Certifications</h3>
+                    <ul>
+                        <li>CEH ($1,199) - Ethical Hacking</li>
+                        <li>CISSP ($749) - Management Level</li>
+                        <li>OSCP ($1,499) - Advanced Pentesting</li>
+                        <li>Cloud Security (AWS, Azure)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="resources-section">
+            <h2>📚 Essential Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>🆓 Free Resources</h3>
+                    <ul>
+                        <li><a href="https://tryhackme.com" target="_blank">TryHackMe</a> - Hands-on labs</li>
+                        <li><a href="https://cybrary.it" target="_blank">Cybrary</a> - Free courses</li>
+                        <li><a href="https://owasp.org" target="_blank">OWASP</a> - Web security</li>
+                        <li><a href="https://github.com/enaqx/awesome-pentest" target="_blank">Awesome Pentest</a> - Tools list</li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h3>💰 Paid Resources</h3>
+                    <ul>
+                        <li>Security+ Study Guide ($50)</li>
+                        <li>Security+ Practice Exams ($30)</li>
+                        <li>Security+ Exam Voucher ($370)</li>
+                        <li>VirtualBox/VMware (Free/Paid)</li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h3>🛠️ Essential Tools</h3>
+                    <ul>
+                        <li>Kali Linux - Penetration testing</li>
+                        <li>Nmap - Network scanning</li>
+                        <li>Burp Suite - Web app testing</li>
+                        <li>Wireshark - Packet analysis</li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h3>👥 Communities</h3>
+                    <ul>
+                        <li>r/cybersecurity (Reddit)</li>
+                        <li>InfoSec Twitter community</li>
+                        <li>Local DEFCON groups</li>
+                        <li>ISACA/ISC2 chapters</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div class="save-notice" id="saveNotice">
-        ✅ Progress saved!
-    </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
