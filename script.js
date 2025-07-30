@@ -1,728 +1,667 @@
-// Enhanced Cybersecurity Roadmap with Retention Features
-let completedTasks = 0;
-let totalTasks = 0;
-let currentStreak = 0;
-let studyTime = 0;
+// Cybersecurity Roadmap - Fixed Saving & Enhanced Retention Features
+class CyberSecurityTracker {
+    constructor() {
+        this.storageKey = 'cybersecurity_progress';
+        this.retentionKey = 'cybersecurity_retention';
+        this.streakKey = 'cybersecurity_streak';
+        
+        // Initialize on page load
+        this.init();
+    }
 
-// Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
-    totalTasks = document.querySelectorAll('.task-checkbox').length;
-    loadProgress();
-    updateStats();
-    updateProgressBars();
-    initializeRetentionFeatures();
-    
-    // Open first phase by default
-    const firstPhaseContent = document.querySelector('.phase-content');
-    if (firstPhaseContent) {
-        firstPhaseContent.style.display = 'block';
+    init() {
+        console.log('🔒 Cybersecurity Tracker Initialized');
+        
+        // Load saved progress
+        this.loadProgress();
+        this.loadRetentionData();
+        
+        // Setup event listeners
+        this.setupEventListeners();
+        
+        // Setup retention features
+        this.setupRetentionSystem();
+        
+        // Update stats
+        this.updateStats();
+        
+        // Setup auto-save
+        this.setupAutoSave();
+        
+        // Check daily streak
+        this.checkDailyStreak();
     }
-    
-    setupKeyboardShortcuts();
-    addSearchBox();
-    addStudyTimer();
-    addFlashcardSystem();
-    
-    // Auto-save every 10 seconds
-    setInterval(saveProgress, 10000);
-    
-    // Show welcome for new users
-    if (!localStorage.getItem('cyber_roadmap_progress')) {
-        setTimeout(showWelcome, 1000);
-    }
-});
 
-// Enhanced progress loading with error handling
-function loadProgress() {
-    try {
-        const saved = localStorage.getItem('cyber_roadmap_progress');
-        const savedStreak = localStorage.getItem('cyber_study_streak');
-        const savedTime = localStorage.getItem('cyber_study_time');
-        
-        if (saved) {
-            const progress = JSON.parse(saved);
-            completedTasks = 0;
-            progress.forEach(taskId => {
-                const checkbox = document.getElementById(taskId);
-                if (checkbox) {
-                    checkbox.classList.add('checked');
-                    checkbox.innerHTML = '✓';
-                    completedTasks++;
-                }
-            });
-        }
-        
-        currentStreak = parseInt(savedStreak) || 0;
-        studyTime = parseInt(savedTime) || 0;
-        
-        console.log(`Loaded progress: ${completedTasks}/${totalTasks} tasks completed`);
-    } catch (error) {
-        console.error('Error loading progress:', error);
-        showNotification('Error loading saved progress', 'error');
-    }
-}
-
-// Enhanced saving with verification
-function saveProgress() {
-    try {
-        const checkedTasks = Array.from(document.querySelectorAll('.task-checkbox.checked'))
-            .map(checkbox => {
-                if (!checkbox.id) {
-                    checkbox.id = 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                }
-                return checkbox.id;
-            })
-            .filter(id => id);
-        
-        localStorage.setItem('cyber_roadmap_progress', JSON.stringify(checkedTasks));
-        localStorage.setItem('cyber_study_streak', currentStreak.toString());
-        localStorage.setItem('cyber_study_time', studyTime.toString());
-        localStorage.setItem('cyber_last_save', new Date().toISOString());
-        
-        showSaveNotice();
-        console.log(`Saved progress: ${checkedTasks.length} tasks completed`);
-        
-        // Verify save worked
-        const verification = localStorage.getItem('cyber_roadmap_progress');
-        if (!verification) {
-            throw new Error('Save verification failed');
-        }
-        
-    } catch (error) {
-        console.error('Error saving progress:', error);
-        showNotification('Failed to save progress. Try downloading backup.', 'error');
-    }
-}
-
-// Enhanced task toggling with retention tracking
-function toggleTask(checkbox) {
-    if (!checkbox.id) {
-        checkbox.id = 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    }
-    
-    if (checkbox.classList.contains('checked')) {
-        checkbox.classList.remove('checked');
-        checkbox.innerHTML = '';
-        completedTasks--;
-    } else {
-        checkbox.classList.add('checked');
-        checkbox.innerHTML = '✓';
-        completedTasks++;
-        
-        // Add to flashcard review
-        addToFlashcardReview(checkbox);
-        
-        // Update streak
-        updateStreak();
-        
-        // Show achievement
-        if (isMilestone(checkbox)) {
-            celebrateMilestone(checkbox);
-        }
-    }
-    
-    updateStats();
-    updateProgressBars();
-    saveProgress();
-}
-
-// Milestone detection for cybersecurity
-function isMilestone(checkbox) {
-    const taskTitle = checkbox.closest('.task-item').querySelector('.task-title').textContent;
-    const milestones = [
-        'Complete First CTF Challenge',
-        'Complete OWASP Top 10',
-        'Learn Metasploit Framework',
-        'Complete First Full Machine',
-        'Schedule Security+ Exam',
-        'Apply for Entry-Level Security Jobs'
-    ];
-    
-    return milestones.some(milestone => taskTitle.includes(milestone));
-}
-
-// Celebrate cybersecurity milestones
-function celebrateMilestone(checkbox) {
-    const taskTitle = checkbox.closest('.task-item').querySelector('.task-title').textContent;
-    
-    const celebration = document.createElement('div');
-    celebration.innerHTML = `
-        <div style="text-align: center;">
-            <div style="font-size: 3em; margin-bottom: 15px;">🎯</div>
-            <h2 style="color: white; margin-bottom: 10px;">Cybersecurity Milestone!</h2>
-            <p style="color: rgba(255,255,255,0.9); font-size: 1.2em;">${taskTitle}</p>
-            <p style="color: rgba(255,255,255,0.7); margin-top: 15px;">You're becoming a cyber defender! 🛡️</p>
-        </div>
-    `;
-    
-    celebration.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, rgba(30, 60, 114, 0.95), rgba(42, 82, 152, 0.95));
-        z-index: 1001;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        animation: milestoneAppear 3s ease-out forwards;
-        backdrop-filter: blur(10px);
-    `;
-    
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes milestoneAppear {
-            0% { opacity: 0; transform: scale(0.5); }
-            15% { opacity: 1; transform: scale(1.05); }
-            85% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0.5); }
-        }
-    `;
-    document.head.appendChild(style);
-    document.body.appendChild(celebration);
-    
-    setTimeout(() => {
-        if (celebration.parentNode) celebration.parentNode.removeChild(celebration);
-        if (style.parentNode) style.parentNode.removeChild(style);
-    }, 3000);
-}
-
-// Update streak tracking
-function updateStreak() {
-    const lastActivity = localStorage.getItem('cyber_last_activity');
-    const today = new Date().toDateString();
-    
-    if (lastActivity !== today) {
-        currentStreak++;
-        localStorage.setItem('cyber_last_activity', today);
-        localStorage.setItem('cyber_study_streak', currentStreak.toString());
-        
-        if (currentStreak % 7 === 0) {
-            showNotification(`🔥 ${currentStreak} day streak! You're on fire!`, 'success');
-        }
-    }
-}
-
-// Enhanced statistics with retention metrics
-function updateStats() {
-    const tasksDoneElement = document.getElementById('tasks-done');
-    const streakElement = document.getElementById('study-streak');
-    const timeElement = document.getElementById('study-time');
-    const completionElement = document.getElementById('completion-percentage');
-    
-    if (tasksDoneElement) {
-        tasksDoneElement.textContent = completedTasks;
-    }
-    
-    if (streakElement) {
-        streakElement.textContent = currentStreak;
-    }
-    
-    if (timeElement) {
-        const hours = Math.floor(studyTime / 60);
-        const minutes = studyTime % 60;
-        timeElement.textContent = `${hours}h ${minutes}m`;
-    }
-    
-    if (completionElement) {
-        const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
-        completionElement.textContent = percentage + '%';
-    }
-}
-
-// Add study timer for retention
-function addStudyTimer() {
-    let timerRunning = false;
-    let sessionMinutes = 0;
-    let timerInterval;
-    
-    const timerDiv = document.createElement('div');
-    timerDiv.innerHTML = `
-        <div style="background: rgba(255,255,255,0.9); padding: 15px; border-radius: 10px; margin: 10px 0; text-align: center;">
-            <h3 style="margin: 0 0 10px 0; color: #1e3c72;">🕐 Study Timer</h3>
-            <div style="font-size: 1.5em; margin: 10px 0;" id="timer-display">00:00</div>
-            <button onclick="toggleTimer()" id="timer-button" style="background: #1e3c72; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin: 0 5px;">Start</button>
-            <button onclick="resetTimer()" style="background: #666; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin: 0 5px;">Reset</button>
-        </div>
-    `;
-    
-    const header = document.querySelector('.header');
-    if (header) {
-        header.appendChild(timerDiv);
-    }
-    
-    // Timer functions
-    window.toggleTimer = function() {
-        const button = document.getElementById('timer-button');
-        const display = document.getElementById('timer-display');
-        
-        if (!timerRunning) {
-            timerRunning = true;
-            button.textContent = 'Pause';
-            button.style.background = '#e74c3c';
+    // FIXED SAVING SYSTEM
+    saveProgress() {
+        try {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const progress = {};
             
-            timerInterval = setInterval(() => {
-                sessionMinutes++;
-                studyTime++;
-                const minutes = Math.floor(sessionMinutes / 60);
-                const seconds = sessionMinutes % 60;
-                display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                // Auto-save study time
-                if (sessionMinutes % 60 === 0) {
-                    saveProgress();
-                }
-            }, 1000);
-        } else {
-            timerRunning = false;
-            button.textContent = 'Start';
-            button.style.background = '#1e3c72';
-            clearInterval(timerInterval);
-            saveProgress();
+            checkboxes.forEach((checkbox, index) => {
+                const taskId = checkbox.id || `task_${index}`;
+                progress[taskId] = checkbox.checked;
+            });
+            
+            localStorage.setItem(this.storageKey, JSON.stringify(progress));
+            console.log('✅ Progress saved successfully');
+            
+            // Update completion stats
+            this.updateStats();
+            
+            // Show save confirmation
+            this.showSaveConfirmation();
+            
+            return true;
+        } catch (error) {
+            console.error('❌ Failed to save progress:', error);
+            alert('Failed to save progress. Please try again.');
+            return false;
         }
-    };
-    
-    window.resetTimer = function() {
-        timerRunning = false;
-        sessionMinutes = 0;
-        clearInterval(timerInterval);
-        document.getElementById('timer-display').textContent = '00:00';
-        document.getElementById('timer-button').textContent = 'Start';
-        document.getElementById('timer-button').style.background = '#1e3c72';
-    };
-}
-
-// Flashcard system for retention
-function addFlashcardSystem() {
-    const flashcardData = {
-        'CIA Triad': 'Confidentiality, Integrity, Availability - The three pillars of information security',
-        'SQL Injection': 'A code injection technique that exploits vulnerabilities in database queries',
-        'XSS': 'Cross-Site Scripting - Injecting malicious scripts into web applications',
-        'Metasploit': 'A penetration testing framework for finding and exploiting vulnerabilities',
-        'Nmap': 'Network Mapper - A tool for network discovery and security auditing',
-        'OWASP Top 10': 'The ten most critical web application security risks',
-        'Privilege Escalation': 'Gaining higher access rights than initially granted',
-        'Social Engineering': 'Manipulating people to divulge confidential information',
-        'SIEM': 'Security Information and Event Management - Centralized security monitoring',
-        'Zero Day': 'A previously unknown vulnerability that has no available patch'
-    };
-    
-    let currentCard = 0;
-    let reviewCards = Object.keys(flashcardData);
-    let showingAnswer = false;
-    
-    const flashcardDiv = document.createElement('div');
-    flashcardDiv.innerHTML = `
-        <div style="background: rgba(255,255,255,0.9); padding: 20px; border-radius: 15px; margin: 20px 0; text-align: center;">
-            <h3 style="margin: 0 0 15px 0; color: #1e3c72;">🧠 Cybersecurity Flashcards</h3>
-            <div id="flashcard" style="background: white; border: 2px solid #1e3c72; border-radius: 10px; padding: 20px; margin: 15px 0; min-height: 120px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="flipCard()">
-                <div id="card-content" style="font-size: 1.2em; text-align: center;">Click to start reviewing!</div>
-            </div>
-            <div style="margin: 15px 0;">
-                <button onclick="previousCard()" style="background: #666; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin: 0 5px;">← Previous</button>
-                <span id="card-counter" style="margin: 0 15px; color: #666;">0/0</span>
-                <button onclick="nextCard()" style="background: #1e3c72; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin: 0 5px;">Next →</button>
-            </div>
-            <div style="margin-top: 15px;">
-                <button onclick="shuffleCards()" style="background: #27ae60; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">🔀 Shuffle</button>
-                <button onclick="resetCards()" style="background: #e74c3c; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">🔄 Reset</button>
-            </div>
-        </div>
-    `;
-    
-    const focusToday = document.querySelector('.focus-today');
-    if (focusToday && focusToday.nextSibling) {
-        focusToday.parentNode.insertBefore(flashcardDiv, focusToday.nextSibling);
     }
-    
-    // Flashcard functions
-    window.flipCard = function() {
-        const content = document.getElementById('card-content');
-        const card = document.getElementById('flashcard');
+
+    loadProgress() {
+        try {
+            const saved = localStorage.getItem(this.storageKey);
+            if (saved) {
+                const progress = JSON.parse(saved);
+                
+                Object.entries(progress).forEach(([taskId, isChecked]) => {
+                    const checkbox = document.getElementById(taskId) || 
+                                   document.querySelector(`input[type="checkbox"]:nth-of-type(${taskId.split('_')[1]})`);
+                    
+                    if (checkbox) {
+                        checkbox.checked = isChecked;
+                    }
+                });
+                
+                console.log('📊 Progress loaded successfully');
+            }
+        } catch (error) {
+            console.error('❌ Failed to load progress:', error);
+        }
+    }
+
+    showSaveConfirmation() {
+        // Create save notification
+        const notification = document.createElement('div');
+        notification.innerHTML = '💾 Progress Saved!';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        `;
         
-        if (reviewCards.length === 0) {
-            resetCards();
+        document.body.appendChild(notification);
+        
+        // Remove after 2 seconds
+        setTimeout(() => {
+            notification.remove();
+        }, 2000);
+    }
+
+    // RETENTION SYSTEM FOR BETTER LEARNING
+    setupRetentionSystem() {
+        this.createRetentionPanel();
+        this.scheduleReviews();
+        this.setupQuizSystem();
+    }
+
+    createRetentionPanel() {
+        const retentionPanel = document.createElement('div');
+        retentionPanel.id = 'retention-panel';
+        retentionPanel.innerHTML = `
+            <div class="retention-header">
+                <h3>🧠 Learning Retention System</h3>
+                <p>Spaced repetition to ensure you remember everything!</p>
+            </div>
+            
+            <div class="retention-stats">
+                <div class="stat-box">
+                    <div class="stat-number" id="retention-score">0%</div>
+                    <div class="stat-label">Retention Score</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="review-due">0</div>
+                    <div class="stat-label">Reviews Due</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="streak-count">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+
+            <div class="review-section">
+                <h4>📚 Today's Reviews</h4>
+                <div id="daily-reviews"></div>
+                <button id="start-review" class="cta-button">Start Review Session</button>
+            </div>
+
+            <div class="quiz-section">
+                <h4>🎯 Quick Knowledge Check</h4>
+                <div id="daily-quiz"></div>
+                <button id="take-quiz" class="cta-button">Take Daily Quiz</button>
+            </div>
+        `;
+
+        // Add CSS for retention panel
+        const style = document.createElement('style');
+        style.textContent = `
+            #retention-panel {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 20px;
+                margin: 20px 0;
+                border-radius: 15px;
+                color: white;
+            }
+            
+            .retention-stats {
+                display: flex;
+                gap: 20px;
+                margin: 20px 0;
+                flex-wrap: wrap;
+            }
+            
+            .stat-box {
+                background: rgba(255,255,255,0.1);
+                padding: 15px;
+                border-radius: 10px;
+                text-align: center;
+                min-width: 120px;
+                backdrop-filter: blur(10px);
+            }
+            
+            .stat-number {
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                opacity: 0.8;
+            }
+            
+            .review-section, .quiz-section {
+                background: rgba(255,255,255,0.1);
+                padding: 15px;
+                margin: 15px 0;
+                border-radius: 10px;
+                backdrop-filter: blur(10px);
+            }
+            
+            .cta-button {
+                background: #ff6b6b;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+            
+            .cta-button:hover {
+                background: #ff5252;
+                transform: translateY(-2px);
+            }
+            
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        
+        document.head.appendChild(style);
+        
+        // Insert after the header
+        const container = document.querySelector('.container') || document.body;
+        const header = container.querySelector('h1') || container.firstChild;
+        header.parentNode.insertBefore(retentionPanel, header.nextSibling);
+        
+        // Setup retention event listeners
+        this.setupRetentionListeners();
+    }
+
+    setupRetentionListeners() {
+        const startReviewBtn = document.getElementById('start-review');
+        const takeQuizBtn = document.getElementById('take-quiz');
+        
+        if (startReviewBtn) {
+            startReviewBtn.addEventListener('click', () => this.startReviewSession());
+        }
+        
+        if (takeQuizBtn) {
+            takeQuizBtn.addEventListener('click', () => this.startQuiz());
+        }
+    }
+
+    // SPACED REPETITION SYSTEM
+    scheduleReviews() {
+        const completedTasks = this.getCompletedTasks();
+        const retentionData = this.getRetentionData();
+        
+        completedTasks.forEach(taskId => {
+            if (!retentionData[taskId]) {
+                // New completed task - schedule first review
+                retentionData[taskId] = {
+                    completedDate: Date.now(),
+                    reviewDates: this.calculateReviewDates(Date.now()),
+                    reviewCount: 0,
+                    strength: 1 // 1-5 scale
+                };
+            }
+        });
+        
+        this.saveRetentionData(retentionData);
+        this.updateRetentionDisplay();
+    }
+
+    calculateReviewDates(completedDate) {
+        // Spaced repetition intervals: 1 day, 3 days, 7 days, 14 days, 30 days
+        const intervals = [1, 3, 7, 14, 30];
+        return intervals.map(interval => 
+            completedDate + (interval * 24 * 60 * 60 * 1000)
+        );
+    }
+
+    startReviewSession() {
+        const reviewItems = this.getDueReviews();
+        
+        if (reviewItems.length === 0) {
+            alert('🎉 No reviews due today! Great job staying on top of your learning!');
             return;
         }
         
-        if (!showingAnswer) {
-            content.innerHTML = `<strong style="color: #1e3c72;">${reviewCards[currentCard]}</strong>`;
-            card.style.borderColor = '#1e3c72';
-            showingAnswer = true;
-        } else {
-            content.innerHTML = `<div style="color: #666;">${flashcardData[reviewCards[currentCard]]}</div>`;
-            card.style.borderColor = '#27ae60';
+        // Create review modal
+        this.createReviewModal(reviewItems);
+    }
+
+    createReviewModal(reviewItems) {
+        const modal = document.createElement('div');
+        modal.id = 'review-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📚 Review Session</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Review these completed tasks to strengthen your memory:</p>
+                    <div id="review-items">
+                        ${reviewItems.map(item => `
+                            <div class="review-item">
+                                <h4>${item.title}</h4>
+                                <p>${item.description}</p>
+                                <div class="difficulty-buttons">
+                                    <button onclick="cyberTracker.markReview('${item.id}', 'easy')">😊 Easy</button>
+                                    <button onclick="cyberTracker.markReview('${item.id}', 'medium')">🤔 Medium</button>
+                                    <button onclick="cyberTracker.markReview('${item.id}', 'hard')">😰 Hard</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add modal CSS
+        const modalStyle = document.createElement('style');
+        modalStyle.textContent = `
+            #review-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .modal-content {
+                background: white;
+                padding: 20px;
+                border-radius: 15px;
+                max-width: 600px;
+                max-height: 80%;
+                overflow-y: auto;
+                position: relative;
+            }
+            
+            .close-modal {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                font-size: 24px;
+                cursor: pointer;
+            }
+            
+            .review-item {
+                border: 1px solid #ddd;
+                padding: 15px;
+                margin: 10px 0;
+                border-radius: 10px;
+            }
+            
+            .difficulty-buttons {
+                margin-top: 10px;
+            }
+            
+            .difficulty-buttons button {
+                margin: 5px;
+                padding: 8px 15px;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+        `;
+        
+        document.head.appendChild(modalStyle);
+        document.body.appendChild(modal);
+        
+        // Close modal functionality
+        modal.querySelector('.close-modal').addEventListener('click', () => {
+            modal.remove();
+            modalStyle.remove();
+        });
+    }
+
+    // QUIZ SYSTEM
+    startQuiz() {
+        const quizQuestions = this.generateQuizQuestions();
+        
+        if (quizQuestions.length === 0) {
+            alert('Complete more tasks to unlock quiz questions!');
+            return;
         }
         
-        updateCardCounter();
-    };
-    
-    window.nextCard = function() {
-        currentCard = (currentCard + 1) % reviewCards.length;
-        showingAnswer = false;
-        document.getElementById('card-content').innerHTML = 'Click to see question';
-        document.getElementById('flashcard').style.borderColor = '#1e3c72';
-        updateCardCounter();
-    };
-    
-    window.previousCard = function() {
-        currentCard = currentCard === 0 ? reviewCards.length - 1 : currentCard - 1;
-        showingAnswer = false;
-        document.getElementById('card-content').innerHTML = 'Click to see question';
-        document.getElementById('flashcard').style.borderColor = '#1e3c72';
-        updateCardCounter();
-    };
-    
-    window.shuffleCards = function() {
-        reviewCards = Object.keys(flashcardData).sort(() => Math.random() - 0.5);
-        currentCard = 0;
-        showingAnswer = false;
-        document.getElementById('card-content').innerHTML = 'Cards shuffled! Click to start.';
-        updateCardCounter();
-        showNotification('🔀 Flashcards shuffled for better retention!', 'success');
-    };
-    
-    window.resetCards = function() {
-        reviewCards = Object.keys(flashcardData);
-        currentCard = 0;
-        showingAnswer = false;
-        document.getElementById('card-content').innerHTML = 'Click to start reviewing!';
-        document.getElementById('flashcard').style.borderColor = '#1e3c72';
-        updateCardCounter();
-    };
-    
-    function updateCardCounter() {
-        document.getElementById('card-counter').textContent = `${currentCard + 1}/${reviewCards.length}`;
+        this.createQuizModal(quizQuestions);
     }
-}
 
-// Add flashcard review when tasks completed
-function addToFlashcardReview(checkbox) {
-    // This would add task-specific concepts to review
-    const taskTitle = checkbox.closest('.task-item').querySelector('.task-title').textContent;
-    // Could expand this to add task-specific flashcards
-}
+    generateQuizQuestions() {
+        // Sample cybersecurity quiz questions
+        return [
+            {
+                question: "What does CIA stand for in cybersecurity?",
+                options: ["Central Intelligence Agency", "Confidentiality, Integrity, Availability", "Computer Information Access", "Cyber Intelligence Analysis"],
+                correct: 1,
+                explanation: "CIA in cybersecurity refers to the three core principles: Confidentiality, Integrity, and Availability."
+            },
+            {
+                question: "Which port is commonly used for HTTPS?",
+                options: ["80", "443", "22", "21"],
+                correct: 1,
+                explanation: "Port 443 is the standard port for HTTPS (HTTP Secure) connections."
+            },
+            {
+                question: "What type of attack involves overwhelming a system with traffic?",
+                options: ["SQL Injection", "Cross-Site Scripting", "DDoS", "Phishing"],
+                correct: 2,
+                explanation: "DDoS (Distributed Denial of Service) attacks overwhelm systems with massive amounts of traffic."
+            },
+            {
+                question: "Which tool is commonly used for network scanning?",
+                options: ["Wireshark", "Nmap", "John the Ripper", "Hashcat"],
+                correct: 1,
+                explanation: "Nmap (Network Mapper) is the most popular tool for network discovery and security scanning."
+            },
+            {
+                question: "What does the 'S' in HTTPS stand for?",
+                options: ["Safe", "Secure", "System", "Server"],
+                correct: 1,
+                explanation: "The 'S' in HTTPS stands for 'Secure', indicating encrypted communication."
+            }
+        ];
+    }
 
-// Initialize retention features
-function initializeRetentionFeatures() {
-    // Add additional stats to the stats section if they don't exist
-    const statsContainer = document.querySelector('.stats');
-    if (statsContainer && !document.getElementById('study-streak')) {
-        const additionalStats = document.createElement('div');
-        additionalStats.className = 'stat-card';
-        additionalStats.innerHTML = `
-            <div class="stat-number" id="study-streak">${currentStreak}</div>
-            <div class="stat-label">Day Streak</div>
-        `;
-        statsContainer.appendChild(additionalStats);
+    // EVENT LISTENERS AND AUTO-SAVE
+    setupEventListeners() {
+        // Save on every checkbox change
+        document.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox') {
+                this.saveProgress();
+                this.scheduleReviews();
+            }
+        });
         
-        const timeStats = document.createElement('div');
-        timeStats.className = 'stat-card';
-        timeStats.innerHTML = `
-            <div class="stat-number" id="study-time">0h 0m</div>
-            <div class="stat-label">Study Time</div>
-        `;
-        statsContainer.appendChild(timeStats);
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                this.saveProgress();
+            }
+            
+            if (e.ctrlKey && e.key === 'r') {
+                e.preventDefault();
+                this.startReviewSession();
+            }
+        });
     }
-}
 
-// Show welcome message
-function showWelcome() {
-    const welcome = document.createElement('div');
-    welcome.innerHTML = `
-        <div style="text-align: center; max-width: 500px;">
-            <h2 style="color: #1e3c72; margin-bottom: 20px;">🛡️ Welcome to Cybersecurity!</h2>
-            <p style="margin-bottom: 15px; line-height: 1.6;">You're starting a journey to become a cybersecurity professional!</p>
-            <p style="margin-bottom: 20px; color: #666;">In 14 weeks, you'll be ready for Security+ certification and entry-level security jobs.</p>
-            <button onclick="this.parentElement.parentElement.remove()" 
-                    style="background: linear-gradient(45deg, #1e3c72, #2a5298); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold;">
-                Start Hacking! 🎯
-            </button>
-        </div>
-    `;
-    
-    welcome.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.8);
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        backdrop-filter: blur(5px);
-    `;
-    
-    const content = welcome.querySelector('div');
-    content.style.cssText = `
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    `;
-    
-    document.body.appendChild(welcome);
-}
-
-// Rest of the original functions (updateProgressBars, toggleWeek, togglePhase, etc.)
-function updateProgressBars() {
-    const weeks = document.querySelectorAll('.week');
-    weeks.forEach(week => {
-        const checkboxes = week.querySelectorAll('.task-checkbox');
-        const checked = week.querySelectorAll('.task-checkbox.checked');
-        const percentage = checkboxes.length > 0 ? (checked.length / checkboxes.length) * 100 : 0;
-        const progressBar = week.querySelector('.progress-fill');
-        if (progressBar) {
-            progressBar.style.width = percentage + '%';
-        }
-    });
-}
-
-function toggleWeek(header) {
-    const week = header.closest('.week');
-    if (week) {
-        week.classList.toggle('expanded');
-        setTimeout(() => updateProgressBars(), 100);
+    setupAutoSave() {
+        // Auto-save every 30 seconds
+        setInterval(() => {
+            this.saveProgress();
+        }, 30000);
+        
+        // Save before page unload
+        window.addEventListener('beforeunload', () => {
+            this.saveProgress();
+        });
     }
-}
 
-function togglePhase(header) {
-    const phase = header.closest('.phase');
-    const content = phase.querySelector('.phase-content');
-    if (content) {
-        const isVisible = content.style.display === 'block';
-        content.style.display = isVisible ? 'none' : 'block';
-        if (!isVisible) {
-            setTimeout(() => updateProgressBars(), 100);
+    // UTILITY FUNCTIONS
+    getCompletedTasks() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        return Array.from(checkboxes).map((cb, index) => cb.id || `task_${index}`);
+    }
+
+    updateStats() {
+        const totalTasks = document.querySelectorAll('input[type="checkbox"]').length;
+        const completedTasks = document.querySelectorAll('input[type="checkbox"]:checked').length;
+        const percentage = Math.round((completedTasks / totalTasks) * 100);
+        
+        // Update progress displays
+        const progressElements = document.querySelectorAll('.progress-percentage');
+        progressElements.forEach(el => {
+            el.textContent = `${percentage}%`;
+        });
+        
+        // Update retention score
+        const retentionScore = document.getElementById('retention-score');
+        if (retentionScore) {
+            retentionScore.textContent = `${Math.max(percentage - 10, 0)}%`;
         }
     }
-}
 
-function showSaveNotice() {
-    const notice = document.getElementById('saveNotice');
-    if (notice) {
-        notice.classList.add('show');
-        setTimeout(() => notice.classList.remove('show'), 2000);
+    updateRetentionDisplay() {
+        const dueReviews = this.getDueReviews().length;
+        const reviewDueElement = document.getElementById('review-due');
+        if (reviewDueElement) {
+            reviewDueElement.textContent = dueReviews;
+        }
     }
-}
 
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.textContent = message;
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        border-radius: 10px;
-        color: white;
-        font-weight: bold;
-        z-index: 1001;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        ${type === 'success' ? 'background: #27ae60;' : 
-          type === 'error' ? 'background: #e74c3c;' : 'background: #1e3c72;'}
-    `;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => notification.style.transform = 'translateX(0)', 100);
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (notification.parentNode) notification.parentNode.removeChild(notification);
-        }, 300);
-    }, 3000);
-}
+    getDueReviews() {
+        const retentionData = this.getRetentionData();
+        const now = Date.now();
+        const dueReviews = [];
+        
+        Object.entries(retentionData).forEach(([taskId, data]) => {
+            const nextReviewDate = data.reviewDates[data.reviewCount];
+            if (nextReviewDate && now >= nextReviewDate) {
+                dueReviews.push({
+                    id: taskId,
+                    title: this.getTaskTitle(taskId),
+                    description: this.getTaskDescription(taskId)
+                });
+            }
+        });
+        
+        return dueReviews;
+    }
 
-// Export/Import functions
-function downloadProgress() {
-    try {
-        const progress = {
-            timestamp: new Date().toISOString(),
-            roadmap_type: 'cybersecurity',
-            version: '2.0',
-            completed_tasks: completedTasks,
-            total_tasks: totalTasks,
-            study_streak: currentStreak,
-            study_time: studyTime,
-            completion_percentage: Math.round((completedTasks / totalTasks) * 100),
-            progress_data: JSON.parse(localStorage.getItem('cyber_roadmap_progress') || '[]')
+    checkDailyStreak() {
+        const today = new Date().toDateString();
+        const lastActive = localStorage.getItem('last_active_date');
+        const currentStreak = parseInt(localStorage.getItem(this.streakKey)) || 0;
+        
+        if (lastActive !== today) {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            if (lastActive === yesterday.toDateString()) {
+                // Continued streak
+                localStorage.setItem(this.streakKey, (currentStreak + 1).toString());
+            } else {
+                // Broken streak
+                localStorage.setItem(this.streakKey, '1');
+            }
+            
+            localStorage.setItem('last_active_date', today);
+        }
+        
+        // Update streak display
+        const streakElement = document.getElementById('streak-count');
+        if (streakElement) {
+            streakElement.textContent = localStorage.getItem(this.streakKey) || '0';
+        }
+    }
+
+    // DATA PERSISTENCE
+    getRetentionData() {
+        try {
+            return JSON.parse(localStorage.getItem(this.retentionKey)) || {};
+        } catch {
+            return {};
+        }
+    }
+
+    saveRetentionData(data) {
+        localStorage.setItem(this.retentionKey, JSON.stringify(data));
+    }
+
+    loadRetentionData() {
+        // Load retention data and update displays
+        this.updateRetentionDisplay();
+    }
+
+    getTaskTitle(taskId) {
+        const checkbox = document.getElementById(taskId);
+        if (checkbox) {
+            const label = checkbox.closest('li') || checkbox.parentNode;
+            return label.textContent.trim().substring(0, 50) + '...';
+        }
+        return 'Cybersecurity Task';
+    }
+
+    getTaskDescription(taskId) {
+        return 'Review this cybersecurity concept to strengthen your understanding.';
+    }
+
+    // EXPORT/IMPORT FUNCTIONALITY
+    exportProgress() {
+        const progress = localStorage.getItem(this.storageKey);
+        const retention = localStorage.getItem(this.retentionKey);
+        const streak = localStorage.getItem(this.streakKey);
+        
+        const exportData = {
+            progress: JSON.parse(progress || '{}'),
+            retention: JSON.parse(retention || '{}'),
+            streak: parseInt(streak || '0'),
+            exportDate: new Date().toISOString()
         };
         
-        const blob = new Blob([JSON.stringify(progress, null, 2)], { type: 'application/json' });
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+            type: 'application/json'
+        });
+        
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `cybersecurity-progress-${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
+        a.download = `cybersecurity_progress_${new Date().toISOString().split('T')[0]}.json`;
         a.click();
-        document.body.removeChild(a);
+        
         URL.revokeObjectURL(url);
+    }
+
+    importProgress(event) {
+        const file = event.target.files[0];
+        if (!file) return;
         
-        showNotification('🛡️ Cybersecurity progress exported!', 'success');
-    } catch (error) {
-        console.error('Export error:', error);
-        showNotification('Error exporting progress', 'error');
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importData = JSON.parse(e.target.result);
+                
+                if (importData.progress) {
+                    localStorage.setItem(this.storageKey, JSON.stringify(importData.progress));
+                }
+                if (importData.retention) {
+                    localStorage.setItem(this.retentionKey, JSON.stringify(importData.retention));
+                }
+                if (importData.streak) {
+                    localStorage.setItem(this.streakKey, importData.streak.toString());
+                }
+                
+                // Reload the page to apply imported data
+                location.reload();
+            } catch (error) {
+                alert('Failed to import data. Please check the file format.');
+            }
+        };
+        
+        reader.readAsText(file);
     }
 }
 
-function importProgress(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const imported = JSON.parse(e.target.result);
-            
-            if (imported.roadmap_type !== 'cybersecurity') {
-                showNotification('Invalid file: Not a cybersecurity roadmap backup.', 'error');
-                return;
-            }
-            
-            // Clear current progress
-            document.querySelectorAll('.task-checkbox.checked').forEach(checkbox => {
-                checkbox.classList.remove('checked');
-                checkbox.innerHTML = '';
-            });
-            
-            // Load imported progress
-            completedTasks = 0;
-            if (imported.progress_data && Array.isArray(imported.progress_data)) {
-                imported.progress_data.forEach(taskId => {
-                    const checkbox = document.getElementById(taskId);
-                    if (checkbox) {
-                        checkbox.classList.add('checked');
-                        checkbox.innerHTML = '✓';
-                        completedTasks++;
-                    }
-                });
-            }
-            
-            currentStreak = imported.study_streak || 0;
-            studyTime = imported.study_time || 0;
-            
-            saveProgress();
-            updateStats();
-            updateProgressBars();
-            
-            showNotification(`🛡️ Progress imported! ${completedTasks} tasks completed.`, 'success');
-            
-        } catch (error) {
-            console.error('Import error:', error);
-            showNotification('Error importing file. Check file format.', 'error');
-        }
-    };
-    
-    reader.readAsText(file);
-    event.target.value = '';
-}
+// Initialize the tracker when DOM is loaded
+let cyberTracker;
 
-function setupKeyboardShortcuts() {
-    document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey || e.metaKey) {
-            switch(e.key) {
-                case '1': case '2': case '3': case '4':
-                    e.preventDefault();
-                    togglePhaseByIndex(parseInt(e.key) - 1);
-                    break;
-                case 's':
-                    e.preventDefault();
-                    saveProgress();
-                    showNotification('Progress saved!', 'success');
-                    break;
-                case 'e':
-                    e.preventDefault();
-                    downloadProgress();
-                    break;
-            }
-        }
-    });
-}
+document.addEventListener('DOMContentLoaded', () => {
+    cyberTracker = new CyberSecurityTracker();
+    
+    // Add export/import buttons to the page
+    const exportBtn = document.createElement('button');
+    exportBtn.textContent = '📤 Export Progress';
+    exportBtn.className = 'cta-button';
+    exportBtn.onclick = () => cyberTracker.exportProgress();
+    
+    const importBtn = document.createElement('input');
+    importBtn.type = 'file';
+    importBtn.accept = '.json';
+    importBtn.style.display = 'none';
+    importBtn.onchange = (e) => cyberTracker.importProgress(e);
+    
+    const importLabel = document.createElement('button');
+    importLabel.textContent = '📥 Import Progress';
+    importLabel.className = 'cta-button';
+    importLabel.onclick = () => importBtn.click();
+    
+    // Add buttons to page
+    const container = document.querySelector('.container') || document.body;
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.cssText = 'margin: 20px 0; text-align: center;';
+    buttonContainer.appendChild(exportBtn);
+    buttonContainer.appendChild(document.createTextNode(' '));
+    buttonContainer.appendChild(importLabel);
+    buttonContainer.appendChild(importBtn);
+    
+    container.appendChild(buttonContainer);
+});
 
-function togglePhaseByIndex(index) {
-    const phases = document.querySelectorAll('.phase-header');
-    if (phases[index]) {
-        togglePhase(phases[index]);
-    }
-}
+// Global functions for modal interactions
+window.cyberTracker = cyberTracker;
 
-function addSearchBox() {
-    const header = document.querySelector('.header');
-    if (header && !header.querySelector('input[type="text"]')) {
-        const searchContainer = document.createElement('div');
-        searchContainer.style.cssText = 'margin-top: 20px;';
-        
-        const searchInput = document.createElement('input');
-        searchInput.type = 'text';
-        searchInput.placeholder = '🔍 Search cybersecurity topics...';
-        searchInput.style.cssText = `
-            width: 100%;
-            max-width: 400px;
-            padding: 12px 20px;
-            border: 2px solid #ddd;
-            border-radius: 25px;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.3s ease;
-        `;
-        
-        searchInput.addEventListener('focus', () => {
-            searchInput.style.borderColor = '#1e3c72';
-        });
-        
-        searchInput.addEventListener('blur', () => {
-            searchInput.style.borderColor = '#ddd';
-        });
-        
-        searchInput.addEventListener('input', (e) => {
-            searchTasks(e.target.value);
-        });
-        
-        searchContainer.appendChild(searchInput);
-        header.appendChild(searchContainer);
-    }
-}
-
-function searchTasks(query) {
-    const tasks = document.querySelectorAll('.task-item');
-    const weeks = document.querySelectorAll('.week');
-    
-    if (!query.trim()) {
-        tasks.forEach(task => task.style.display = 'flex');
-        weeks.forEach(week => week.style.display = 'block');
-        return;
-    }
-    
-    const searchTerm = query.toLowerCase();
-    let visibleWeeks = new Set();
-    
-    tasks.forEach(task => {
-        const title = task.querySelector('.task-title').textContent.toLowerCase();
-        const desc = task.querySelector('.task-desc').textContent.toLowerCase();
-        
-        if (title.includes(searchTerm) || desc.includes(searchTerm)) {
-            task.style.display = 'flex';
-            const week = task.closest('.week');
-            if (week) {
-                visibleWeeks.add(week);
-            }
-        } else {
-            task.style.display = 'none';
-        }
-    });
-    
-    weeks.forEach(week => {
-        if (visibleWeeks.has(week)) {
-            week.style.display = 'block';
-            week.classList.add('expanded');
-        } else {
-            week.style.display = 'none';
-        }
-    });
-}
+console.log('🔒 Cybersecurity Learning System Loaded Successfully!');
+console.log('📊 Features: Auto-save, Spaced Repetition, Daily Streaks, Quizzes');
+console.log('⌨️ Shortcuts: Ctrl+S (Save), Ctrl+R (Review)');
