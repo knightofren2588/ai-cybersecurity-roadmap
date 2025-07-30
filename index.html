@@ -3,464 +3,1126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast-Track Cybersecurity Roadmap</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Cybersecurity Roadmap - Compete & Surpass</title>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .progress-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 15px;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+        }
+        
+        .path-overview {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4f1d4 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 6px solid #4CAF50;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .path-overview h2 {
+            color: #2d5a2d;
+            margin-bottom: 15px;
+        }
+        
+        .path-name {
+            background: #2196F3;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px 5px 5px 0;
+            font-size: 0.9em;
+        }
+        
+        .section {
+            background: white;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+        
+        .section-header:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+        
+        .section-header h2 {
+            font-size: 1.4em;
+        }
+        
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .section-content.open {
+            max-height: 3000px;
+            padding: 25px;
+        }
+        
+        .toggle-icon {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
+        
+        .week {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .week:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+        }
+        
+        .week-header {
+            background: #f8f9fa;
+            padding: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .week-header:hover {
+            background: #e9ecef;
+        }
+        
+        .week-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .week-content.open {
+            max-height: 1500px;
+            padding: 20px;
+        }
+        
+        .task {
+            background: #f9f9f9;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .task:hover {
+            background: #f0f0f0;
+            border-left-color: #4CAF50;
+            transform: translateX(5px);
+        }
+        
+        .task-checkbox {
+            margin-top: 5px;
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+        
+        .task-content {
+            flex: 1;
+        }
+        
+        .task-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.1em;
+        }
+        
+        .task p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .time-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 1px solid #ffd93d;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .completed {
+            background: #e8f5e8;
+            border-left-color: #4CAF50;
+        }
+        
+        .competitive-advantage {
+            background: linear-gradient(135deg, #fff9c4 0%, #f7dc6f 100%);
+            border: 2px solid #f1c40f;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .competitive-advantage h3 {
+            color: #b7950b;
+            margin-bottom: 10px;
+        }
+        
+        /* Resource Hub Styles */
+        .resource-hub {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d4e6ea 100%);
+            border: 2px solid #3498db;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .resource-category {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .resource-category h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .resource-link {
+            display: block;
+            color: #3498db;
+            text-decoration: none;
+            padding: 5px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .resource-link:hover {
+            background: #f8f9fa;
+            padding-left: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Pomodoro Timer Styles */
+        .pomodoro-container {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border: 2px solid #e74c3c;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .timer-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #c0392b;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .timer-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        
+        .timer-btn:hover {
+            background: #c0392b;
+        }
+        
+        .timer-btn.active {
+            background: #27ae60;
+        }
+        
+        /* Achievements Styles */
+        .achievements-container {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border: 2px solid #f39c12;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .achievement {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #ecf0f1;
+            transition: all 0.3s ease;
+        }
+        
+        .achievement.unlocked {
+            border-color: #f39c12;
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            transform: scale(1.02);
+        }
+        
+        .achievement.locked {
+            opacity: 0.5;
+            filter: grayscale(100%);
+        }
+        
+        .achievement-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .achievement-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .achievement-desc {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .section-header {
+                padding: 20px;
+            }
+            
+            .section-header h2 {
+                font-size: 1.2em;
+            }
+            
+            .task {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .task-checkbox {
+                margin-top: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header class="hero">
-            <h1>🔒 Fast-Track Cybersecurity Roadmap</h1>
-            <p class="hero-subtitle">14 weeks to Security+ certification and cybersecurity career</p>
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
-                </div>
-                <div class="progress-text">
-                    <span class="progress-percentage">0%</span> Complete
-                </div>
-            </div>
-        </header>
+    <div class="header">
+        <h1>🚀 Cybersecurity Roadmap: Compete & Surpass</h1>
+        <p>Fast but Comprehensive • Projects + Certifications • Budget: ~$415</p>
+    </div>
 
-        <!-- Phase 1: Foundation (Weeks 1-4) -->
-        <div class="phase-container">
-            <h2 class="phase-header" onclick="togglePhase(this)">▼ Phase 1: Foundation (Weeks 1-4)</h2>
-            <div class="phase-content">
-                
-                <!-- Week 1 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 1: Cybersecurity Fundamentals</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Understand basic cybersecurity concepts and start hands-on practice</p>
-                            <p><strong>Time:</strong> 10-15 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w1t1"> Create TryHackMe account (free)</li>
-                            <li><input type="checkbox" id="w1t2"> Complete "Pre Security" path introduction</li>
-                            <li><input type="checkbox" id="w1t3"> Learn CIA Triad (Confidentiality, Integrity, Availability)</li>
-                            <li><input type="checkbox" id="w1t4"> Complete "Network Fundamentals" room</li>
-                            <li><input type="checkbox" id="w1t5"> Understand TCP/IP basics</li>
-                            <li><input type="checkbox" id="w1t6"> Learn about common network ports (80, 443, 22, 21)</li>
-                            <li><input type="checkbox" id="w1t7"> Complete "Linux Fundamentals" room</li>
-                            <li><input type="checkbox" id="w1t8"> Practice basic Linux commands (ls, cd, cat, grep)</li>
-                            <li><input type="checkbox" id="w1t9"> Complete "Windows Fundamentals" room</li>
-                            <li><input type="checkbox" id="w1t10"> Set up virtual lab environment (VirtualBox + Kali Linux)</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Week 2 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 2: Network Security Basics</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Learn network security fundamentals and scanning techniques</p>
-                            <p><strong>Time:</strong> 12-15 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w2t1"> Complete "Network Security" room on TryHackMe</li>
-                            <li><input type="checkbox" id="w2t2"> Learn about firewalls and how they work</li>
-                            <li><input type="checkbox" id="w2t3"> Understand VPNs and encryption basics</li>
-                            <li><input type="checkbox" id="w2t4"> Complete "Nmap" room - learn network scanning</li>
-                            <li><input type="checkbox" id="w2t5"> Practice Nmap commands (ping sweep, port scan)</li>
-                            <li><input type="checkbox" id="w2t6"> Complete "Wireshark" room - packet analysis</li>
-                            <li><input type="checkbox" id="w2t7"> Analyze sample network traffic</li>
-                            <li><input type="checkbox" id="w2t8"> Learn about common network protocols (HTTP, HTTPS, SSH, FTP)</li>
-                            <li><input type="checkbox" id="w2t9"> Complete "Burp Suite" basics room</li>
-                            <li><input type="checkbox" id="w2t10"> Practice intercepting HTTP requests</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Week 3 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 3: Web Application Security</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Understand web vulnerabilities and basic exploitation</p>
-                            <p><strong>Time:</strong> 12-15 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w3t1"> Complete "OWASP Top 10" room</li>
-                            <li><input type="checkbox" id="w3t2"> Learn about SQL injection attacks</li>
-                            <li><input type="checkbox" id="w3t3"> Practice SQL injection on vulnerable apps</li>
-                            <li><input type="checkbox" id="w3t4"> Understand Cross-Site Scripting (XSS)</li>
-                            <li><input type="checkbox" id="w3t5"> Complete XSS challenges</li>
-                            <li><input type="checkbox" id="w3t6"> Learn about Cross-Site Request Forgery (CSRF)</li>
-                            <li><input type="checkbox" id="w3t7"> Complete "Web Fundamentals" path</li>
-                            <li><input type="checkbox" id="w3t8"> Practice with DVWA (Damn Vulnerable Web App)</li>
-                            <li><input type="checkbox" id="w3t9"> Learn about session management vulnerabilities</li>
-                            <li><input type="checkbox" id="w3t10"> Complete "Web Security" challenges</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Week 4 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 4: Cryptography & Authentication</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Master cryptography basics and authentication mechanisms</p>
-                            <p><strong>Time:</strong> 12-15 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w4t1"> Complete "Cryptography" room on TryHackMe</li>
-                            <li><input type="checkbox" id="w4t2"> Learn symmetric vs asymmetric encryption</li>
-                            <li><input type="checkbox" id="w4t3"> Understand hashing (MD5, SHA-1, SHA-256)</li>
-                            <li><input type="checkbox" id="w4t4"> Practice hash cracking with John the Ripper</li>
-                            <li><input type="checkbox" id="w4t5"> Complete "Hash Cracking" challenges</li>
-                            <li><input type="checkbox" id="w4t6"> Learn about digital certificates and PKI</li>
-                            <li><input type="checkbox" id="w4t7"> Understand multi-factor authentication (MFA)</li>
-                            <li><input type="checkbox" id="w4t8"> Practice password attacks (dictionary, brute force)</li>
-                            <li><input type="checkbox" id="w4t9"> Complete "Authentication Bypass" room</li>
-                            <li><input type="checkbox" id="w4t10"> Learn about secure password storage (bcrypt, scrypt)</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+    <div class="progress-section">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
-
-        <!-- Phase 2: Intermediate Skills (Weeks 5-8) -->
-        <div class="phase-container">
-            <h2 class="phase-header" onclick="togglePhase(this)">▼ Phase 2: Intermediate Skills (Weeks 5-8)</h2>
-            <div class="phase-content">
-                
-                <!-- Week 5 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 5: System Administration & Hardening</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Learn system security and hardening techniques</p>
-                            <p><strong>Time:</strong> 12-15 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w5t1"> Complete "Active Directory Basics" room</li>
-                            <li><input type="checkbox" id="w5t2"> Learn Windows security policies</li>
-                            <li><input type="checkbox" id="w5t3"> Practice Linux system hardening</li>
-                            <li><input type="checkbox" id="w5t4"> Complete "Linux Privilege Escalation" room</li>
-                            <li><input type="checkbox" id="w5t5"> Learn about access controls (RBAC, DAC, MAC)</li>
-                            <li><input type="checkbox" id="w5t6"> Complete "Windows Security" room</li>
-                            <li><input type="checkbox" id="w5t7"> Practice file permissions and ACLs</li>
-                            <li><input type="checkbox" id="w5t8"> Learn about system monitoring and logging</li>
-                            <li><input type="checkbox" id="w5t9"> Complete "System Security" challenges</li>
-                            <li><input type="checkbox" id="w5t10"> Set up basic intrusion detection (OSSEC)</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Week 6 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 6: Penetration Testing Basics</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Learn ethical hacking and penetration testing methodology</p>
-                            <p><strong>Time:</strong> 12-15 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w6t1"> Complete "Pentesting Fundamentals" path</li>
-                            <li><input type="checkbox" id="w6t2"> Learn the penetration testing methodology</li>
-                            <li><input type="checkbox" id="w6t3"> Practice reconnaissance techniques</li>
-                            <li><input type="checkbox" id="w6t4"> Complete "Metasploit" introduction room</li>
-                            <li><input type="checkbox" id="w6t5"> Learn basic exploit development concepts</li>
-                            <li><input type="checkbox" id="w6t6"> Complete "Basic Pentesting" room</li>
-                            <li><input type="checkbox" id="w6t7"> Practice vulnerability assessment</li>
-                            <li><input type="checkbox" id="w6t8"> Learn about social engineering basics</li>
-                            <li><input type="checkbox" id="w6t9"> Complete "Phishing" awareness room</li>
-                            <li><input type="checkbox" id="w6t10"> Write your first penetration test report</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Week 7 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 7: Incident Response & Forensics</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Learn incident response procedures and digital forensics</p>
-                            <p><strong>Time:</strong> 12-15 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w7t1"> Complete "Incident Response" room</li>
-                            <li><input type="checkbox" id="w7t2"> Learn NIST incident response framework</li>
-                            <li><input type="checkbox" id="w7t3"> Practice malware analysis basics</li>
-                            <li><input type="checkbox" id="w7t4"> Complete "Digital Forensics" introduction</li>
-                            <li><input type="checkbox" id="w7t5"> Learn file system forensics</li>
-                            <li><input type="checkbox" id="w7t6"> Practice memory forensics with Volatility</li>
-                            <li><input type="checkbox" id="w7t7"> Complete "Forensics" challenges</li>
-                            <li><input type="checkbox" id="w7t8"> Learn about chain of custody</li>
-                            <li><input type="checkbox" id="w7t9"> Practice log analysis (SIEM basics)</li>
-                            <li><input type="checkbox" id="w7t10"> Complete "Blue Team" fundamentals</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Week 8 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 8: Advanced Machines & Real-World Practice</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Apply skills to realistic scenarios and challenging machines</p>
-                            <p><strong>Time:</strong> 15-20 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w8t1"> Complete 3 Easy-level TryHackMe machines</li>
-                            <li><input type="checkbox" id="w8t2"> Complete 2 Medium-level machines</li>
-                            <li><input type="checkbox" id="w8t3"> Write detailed writeups for each machine</li>
-                            <li><input type="checkbox" id="w8t4"> Complete "Blue" room (Windows forensics)</li>
-                            <li><input type="checkbox" id="w8t5"> Complete "Ice" room (Windows exploitation)</li>
-                            <li><input type="checkbox" id="w8t6"> Complete healthcare-themed security scenarios</li>
-                            <li><input type="checkbox" id="w8t7"> Practice network segmentation concepts</li>
-                            <li><input type="checkbox" id="w8t8"> Learn about HIPAA compliance basics</li>
-                            <li><input type="checkbox" id="w8t9"> Complete "Corporate" themed rooms</li>
-                            <li><input type="checkbox" id="w8t10"> Build your first cybersecurity portfolio</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div class="progress-text">
+            Progress: <span id="progressPercent">0%</span> Complete
         </div>
+    </div>
 
-        <!-- Phase 3: Advanced Security (Weeks 9-12) -->
-        <div class="phase-container">
-            <h2 class="phase-header" onclick="togglePhase(this)">▼ Phase 3: Advanced Security & Certification (Weeks 9-12)</h2>
-            <div class="phase-content">
-                
-                <!-- Week 9 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 9: Security+ Certification Prep (Start)</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Begin focused Security+ exam preparation</p>
-                            <p><strong>Time:</strong> 15-20 hours</p>
-                            <p><strong>Cost:</strong> $370 for exam voucher</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w9t1"> Purchase CompTIA Security+ SY0-601 study guide</li>
-                            <li><input type="checkbox" id="w9t2"> Complete Security+ Domain 1: Attacks, Threats, Vulnerabilities</li>
-                            <li><input type="checkbox" id="w9t3"> Complete Security+ Domain 2: Architecture and Design</li>
-                            <li><input type="checkbox" id="w9t4"> Take first practice exam (baseline score)</li>
-                            <li><input type="checkbox" id="w9t5"> Review weak areas from practice exam</li>
-                            <li><input type="checkbox" id="w9t6"> Complete advanced cryptography topics</li>
-                            <li><input type="checkbox" id="w9t7"> Learn about security frameworks (NIST, ISO 27001)</li>
-                            <li><input type="checkbox" id="w9t8"> Practice risk assessment calculations</li>
-                            <li><input type="checkbox" id="w9t9"> Complete "Risk Assessment" room on TryHackMe</li>
-                            <li><input type="checkbox" id="w9t10"> Create Security+ study schedule for remaining weeks</li>
-                        </ul>
-                    </div>
-                </div>
+    <div class="path-overview">
+        <h2>🎯 Strategic Learning Path to Surpass Current Analyst</h2>
+        <p><strong>Path 1:</strong> <span class="path-name">Pre Security</span> (FREE - Week 1)</p>
+        <p><strong>Path 2:</strong> <span class="path-name">Jr Penetration Tester</span> ($10/month - Weeks 2-7)</p>
+        <p><strong>Path 3:</strong> <span class="path-name">Security+</span> Study + Exam (Weeks 8-10)</p>
+        <p><strong>Path 4:</strong> <span class="path-name">Healthcare Security Projects</span> (Weeks 11-12)</p>
+        <p><strong>Total Cost:</strong> $30 TryHackMe + $15 Study Materials + $370 Exam = $415</p>
+    </div>
 
-                <!-- Week 10 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 10: Advanced Threat Detection</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Master advanced threat detection and security operations</p>
-                            <p><strong>Time:</strong> 15-20 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w10t1"> Complete Security+ Domain 3: Implementation</li>
-                            <li><input type="checkbox" id="w10t2"> Complete Security+ Domain 4: Operations and Incident Response</li>
-                            <li><input type="checkbox" id="w10t3"> Learn about SIEM tools (Splunk basics)</li>
-                            <li><input type="checkbox" id="w10t4"> Complete "SIEM" room on TryHackMe</li>
-                            <li><input type="checkbox" id="w10t5"> Practice log correlation and analysis</li>
-                            <li><input type="checkbox" id="w10t6"> Learn about threat intelligence</li>
-                            <li><input type="checkbox" id="w10t7"> Complete "Threat Intelligence" room</li>
-                            <li><input type="checkbox" id="w10t8"> Practice with YARA rules</li>
-                            <li><input type="checkbox" id="w10t9"> Learn about APT (Advanced Persistent Threats)</li>
-                            <li><input type="checkbox" id="w10t10"> Take second Security+ practice exam</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Week 11 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 11: Security Frameworks & Compliance</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Understand enterprise security and compliance requirements</p>
-                            <p><strong>Time:</strong> 15-20 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w11t1"> Complete Security+ Domain 5: Governance, Risk, Compliance</li>
-                            <li><input type="checkbox" id="w11t2"> Learn MITRE ATT&CK framework</li>
-                            <li><input type="checkbox" id="w11t3"> Complete "MITRE" room on TryHackMe</li>
-                            <li><input type="checkbox" id="w11t4"> Study NIST Cybersecurity Framework</li>
-                            <li><input type="checkbox" id="w11t5"> Learn about compliance standards (PCI-DSS, HIPAA, SOX)</li>
-                            <li><input type="checkbox" id="w11t6"> Practice business continuity planning</li>
-                            <li><input type="checkbox" id="w11t7"> Complete "Governance" challenges</li>
-                            <li><input type="checkbox" id="w11t8"> Learn about security awareness training</li>
-                            <li><input type="checkbox" id="w11t9"> Complete third Security+ practice exam</li>
-                            <li><input type="checkbox" id="w11t10"> Schedule Security+ exam for Week 12</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Week 12 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 12: Security+ Certification & Final Review</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Pass Security+ certification exam</p>
-                            <p><strong>Time:</strong> 20+ hours</p>
-                            <p><strong>Milestone:</strong> Earn Security+ certification! 🎉</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w12t1"> Complete final Security+ review sessions</li>
-                            <li><input type="checkbox" id="w12t2"> Take 3+ full-length practice exams (aim for 85%+)</li>
-                            <li><input type="checkbox" id="w12t3"> Review all weak knowledge areas</li>
-                            <li><input type="checkbox" id="w12t4"> Complete Security+ performance-based question practice</li>
-                            <li><input type="checkbox" id="w12t5"> Take CompTIA Security+ SY0-601 exam</li>
-                            <li><input type="checkbox" id="w12t6"> Receive Security+ certification results</li>
-                            <li><input type="checkbox" id="w12t7"> Update LinkedIn with Security+ certification</li>
-                            <li><input type="checkbox" id="w12t8"> Complete advanced TryHackMe rooms for continued learning</li>
-                            <li><input type="checkbox" id="w12t9"> Build comprehensive cybersecurity resume</li>
-                            <li><input type="checkbox" id="w12t10"> Start applying for entry-level cybersecurity positions</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+    <!-- POMODORO TIMER -->
+    <div class="pomodoro-container">
+        <h3>🍅 ADHD Focus Timer</h3>
+        <div class="timer-display" id="timerDisplay">25:00</div>
+        <div class="timer-controls">
+            <button class="timer-btn" id="startBtn">Start</button>
+            <button class="timer-btn" id="pauseBtn">Pause</button>
+            <button class="timer-btn" id="resetBtn">Reset</button>
+            <button class="timer-btn" id="workBtn">Work (25m)</button>
+            <button class="timer-btn" id="breakBtn">Break (5m)</button>
         </div>
+        <p><strong>💡 Tip:</strong> 25 minutes focused work, 5 minute break. Perfect for ADHD!</p>
+        <p><small>If timer doesn't work, open browser console (F12) to see error messages</small></p>
+    </div>
 
-        <!-- Phase 4: Career Launch (Weeks 13-14) -->
-        <div class="phase-container">
-            <h2 class="phase-header" onclick="togglePhase(this)">▼ Phase 4: Career Launch (Weeks 13-14)</h2>
-            <div class="phase-content">
-                
-                <!-- Week 13 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 13: Job Search & Interview Prep</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Launch cybersecurity job search campaign</p>
-                            <p><strong>Time:</strong> 15-20 hours</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w13t1"> Create professional cybersecurity resume</li>
-                            <li><input type="checkbox" id="w13t2"> Build LinkedIn profile highlighting Security+ cert</li>
-                            <li><input type="checkbox" id="w13t3"> Create GitHub portfolio with TryHackMe writeups</li>
-                            <li><input type="checkbox" id="w13t4"> Research cybersecurity positions at target companies</li>
-                            <li><input type="checkbox" id="w13t5"> Apply to 10+ entry-level cybersecurity jobs</li>
-                            <li><input type="checkbox" id="w13t6"> Prepare for common cybersecurity interview questions</li>
-                            <li><input type="checkbox" id="w13t7"> Practice technical interview scenarios</li>
-                            <li><input type="checkbox" id="w13t8"> Network with cybersecurity professionals</li>
-                            <li><input type="checkbox" id="w13t9"> Join cybersecurity communities (Discord, Reddit)</li>
-                            <li><input type="checkbox" id="w13t10"> Research salary expectations for your area</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Week 14 -->
-                <div class="week-container">
-                    <h3 class="week-header" onclick="toggleWeek(this)">▼ Week 14: Advanced Skills & Specialization</h3>
-                    <div class="week-content">
-                        <div class="week-summary">
-                            <p><strong>Goal:</strong> Develop specialized skills and plan advanced certifications</p>
-                            <p><strong>Time:</strong> 15-20 hours</p>
-                            <p><strong>Achievement:</strong> Job-ready cybersecurity professional! 🚀</p>
-                        </div>
-                        <ul class="task-list">
-                            <li><input type="checkbox" id="w14t1"> Choose specialization path (pentesting, SOC analyst, etc.)</li>
-                            <li><input type="checkbox" id="w14t2"> Complete advanced TryHackMe path for chosen specialization</li>
-                            <li><input type="checkbox" id="w14t3"> Research next certification (CEH, CISSP, OSCP)</li>
-                            <li><input type="checkbox" id="w14t4"> Complete 5+ Hard-level TryHackMe machines</li>
-                            <li><input type="checkbox" id="w14t5"> Continue job applications and interviews</li>
-                            <li><input type="checkbox" id="w14t6"> Build home lab for continued learning</li>
-                            <li><input type="checkbox" id="w14t7"> Contribute to cybersecurity community (blogs, forums)</li>
-                            <li><input type="checkbox" id="w14t8"> Attend virtual cybersecurity conferences</li>
-                            <li><input type="checkbox" id="w14t9"> Plan continuing education strategy</li>
-                            <li><input type="checkbox" id="w14t10"> Celebrate your cybersecurity career transformation! 🎉</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+    <!-- ACHIEVEMENTS SYSTEM -->
+    <div class="achievements-container">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h3>🏆 Achievements & Progress Badges</h3>
+            <span class="toggle-icon">▼</span>
         </div>
-
-        <!-- Career Outcomes Section -->
-        <div class="outcomes-section">
-            <h2>🎯 Your Cybersecurity Career Outcomes</h2>
-            <div class="outcomes-grid">
-                <div class="outcome-card">
-                    <h3>💼 Entry-Level Positions</h3>
-                    <ul>
-                        <li>SOC Analyst I: $45,000-65,000</li>
-                        <li>IT Security Specialist: $50,000-70,000</li>
-                        <li>Cybersecurity Analyst: $55,000-75,000</li>
-                        <li>Information Security Analyst: $60,000-80,000</li>
-                    </ul>
+        <div class="section-content">
+            <div class="achievements-grid">
+                <div class="achievement locked" id="achievement-first-room">
+                    <div class="achievement-icon">🎯</div>
+                    <div class="achievement-title">First Steps</div>
+                    <div class="achievement-desc">Complete your first TryHackMe room</div>
                 </div>
-                <div class="outcome-card">
-                    <h3>📈 Growth Potential</h3>
-                    <ul>
-                        <li>Senior SOC Analyst: $70,000-95,000</li>
-                        <li>Penetration Tester: $80,000-120,000</li>
-                        <li>Security Engineer: $90,000-130,000</li>
-                        <li>CISO (5-10 years): $150,000-300,000+</li>
-                    </ul>
+                <div class="achievement locked" id="achievement-lab-setup">
+                    <div class="achievement-icon">🖥️</div>
+                    <div class="achievement-title">Lab Master</div>
+                    <div class="achievement-desc">Set up your cybersecurity lab</div>
                 </div>
-                <div class="outcome-card">
-                    <h3>🏥 Healthcare Focus</h3>
-                    <ul>
-                        <li>Healthcare Security Analyst</li>
-                        <li>HIPAA Compliance Specialist</li>
-                        <li>Medical Device Security</li>
-                        <li>Healthcare IT Security Manager</li>
-                    </ul>
+                <div class="achievement locked" id="achievement-week-complete">
+                    <div class="achievement-icon">📅</div>
+                    <div class="achievement-title">Week Warrior</div>
+                    <div class="achievement-desc">Complete your first week</div>
                 </div>
-                <div class="outcome-card">
-                    <h3>🎓 Advanced Certifications</h3>
-                    <ul>
-                        <li>CEH ($1,199) - Ethical Hacking</li>
-                        <li>CISSP ($749) - Management Level</li>
-                        <li>OSCP ($1,499) - Advanced Pentesting</li>
-                        <li>Cloud Security (AWS, Azure)</li>
-                    </ul>
+                <div class="achievement locked" id="achievement-web-hacker">
+                    <div class="achievement-icon">🕷️</div>
+                    <div class="achievement-title">Web Hacker</div>
+                    <div class="achievement-desc">Master web application security</div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Resources Section -->
-        <div class="resources-section">
-            <h2>📚 Essential Resources</h2>
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <h3>🆓 Free Resources</h3>
-                    <ul>
-                        <li><a href="https://tryhackme.com" target="_blank">TryHackMe</a> - Hands-on labs</li>
-                        <li><a href="https://cybrary.it" target="_blank">Cybrary</a> - Free courses</li>
-                        <li><a href="https://owasp.org" target="_blank">OWASP</a> - Web security</li>
-                        <li><a href="https://github.com/enaqx/awesome-pentest" target="_blank">Awesome Pentest</a> - Tools list</li>
-                    </ul>
+                <div class="achievement locked" id="achievement-linux-master">
+                    <div class="achievement-icon">🐧</div>
+                    <div class="achievement-title">Linux Master</div>
+                    <div class="achievement-desc">Complete Linux privilege escalation</div>
                 </div>
-                <div class="resource-card">
-                    <h3>💰 Paid Resources</h3>
-                    <ul>
-                        <li>Security+ Study Guide ($50)</li>
-                        <li>Security+ Practice Exams ($30)</li>
-                        <li>Security+ Exam Voucher ($370)</li>
-                        <li>VirtualBox/VMware (Free/Paid)</li>
-                    </ul>
+                <div class="achievement locked" id="achievement-windows-expert">
+                    <div class="achievement-icon">🪟</div>
+                    <div class="achievement-title">Windows Expert</div>
+                    <div class="achievement-desc">Master Windows exploitation</div>
                 </div>
-                <div class="resource-card">
-                    <h3>🛠️ Essential Tools</h3>
-                    <ul>
-                        <li>Kali Linux - Penetration testing</li>
-                        <li>Nmap - Network scanning</li>
-                        <li>Burp Suite - Web app testing</li>
-                        <li>Wireshark - Packet analysis</li>
-                    </ul>
+                <div class="achievement locked" id="achievement-metasploit">
+                    <div class="achievement-icon">💥</div>
+                    <div class="achievement-title">Exploit Master</div>
+                    <div class="achievement-desc">Master Metasploit Framework</div>
                 </div>
-                <div class="resource-card">
-                    <h3>👥 Communities</h3>
-                    <ul>
-                        <li>r/cybersecurity (Reddit)</li>
-                        <li>InfoSec Twitter community</li>
-                        <li>Local DEFCON groups</li>
-                        <li>ISACA/ISC2 chapters</li>
-                    </ul>
+                <div class="achievement locked" id="achievement-security-plus">
+                    <div class="achievement-icon">🎓</div>
+                    <div class="achievement-title">Certified Professional</div>
+                    <div class="achievement-desc">Pass Security+ certification</div>
+                </div>
+                <div class="achievement locked" id="achievement-healthcare">
+                    <div class="achievement-icon">🏥</div>
+                    <div class="achievement-title">Healthcare Security Specialist</div>
+                    <div class="achievement-desc">Complete healthcare security projects</div>
+                </div>
+                <div class="achievement locked" id="achievement-complete">
+                    <div class="achievement-icon">👑</div>
+                    <div class="achievement-title">Cyber Warrior</div>
+                    <div class="achievement-desc">Complete the entire roadmap</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- RESOURCE HUB -->
+    <div class="resource-hub">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h3>🧰 Resource Hub - Direct Access to All Tools</h3>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+            <div class="resource-grid">
+                <div class="resource-category">
+                    <h4>🎮 Learning Platforms</h4>
+                    <a href="https://tryhackme.com" target="_blank" class="resource-link">TryHackMe</a>
+                    <a href="https://app.hackthebox.com" target="_blank" class="resource-link">HackTheBox</a>
+                    <a href="https://www.vulnhub.com" target="_blank" class="resource-link">VulnHub</a>
+                    <a href="https://portswigger.net/web-security" target="_blank" class="resource-link">PortSwigger Web Security Academy</a>
+                </div>
+                
+                <div class="resource-category">
+                    <h4>🛠️ Security Tools</h4>
+                    <a href="https://www.kali.org/get-kali/" target="_blank" class="resource-link">Kali Linux Download</a>
+                    <a href="https://www.virtualbox.org" target="_blank" class="resource-link">VirtualBox</a>
+                    <a href="https://portswigger.net/burp/communitydownload" target="_blank" class="resource-link">Burp Suite Community</a>
+                    <a href="https://www.metasploit.com" target="_blank" class="resource-link">Metasploit</a>
+                    <a href="https://nmap.org" target="_blank" class="resource-link">Nmap</a>
+                </div>
+                
+                <div class="resource-category">
+                    <h4>📚 Security+ Study</h4>
+                    <a href="https://www.youtube.com/playlist?list=PLG49S3nxzAnkL2ulFS3132mOVKuzzBxA8" target="_blank" class="resource-link">Professor Messer SY0-701 FREE Course</a>
+                    <a href="https://www.udemy.com/course/comptia-security-sy0-701-complete-course/" target="_blank" class="resource-link">Jason Dion Practice Exams</a>
+                    <a href="https://www.comptia.org/certifications/security" target="_blank" class="resource-link">CompTIA Security+ Official</a>
+                    <a href="https://www.pearsonvue.com/comptia" target="_blank" class="resource-link">Schedule Security+ Exam</a>
+                </div>
+                
+                <div class="resource-category">
+                    <h4>🏥 Healthcare Security</h4>
+                    <a href="https://www.hhs.gov/hipaa/for-professionals/security/index.html" target="_blank" class="resource-link">HIPAA Security Rule</a>
+                    <a href="https://www.healthcareinfosecurity.com" target="_blank" class="resource-link">Healthcare InfoSecurity News</a>
+                    <a href="https://h-isac.org" target="_blank" class="resource-link">Health Information Sharing</a>
+                    <a href="https://www.isc2.org/Certifications/HCISPP" target="_blank" class="resource-link">HCISPP Certification</a>
+                </div>
+                
+                <div class="resource-category">
+                    <h4>🧠 ADHD Learning Tools</h4>
+                    <a href="https://obsproject.com" target="_blank" class="resource-link">OBS (Screen Recording)</a>
+                    <a href="https://apps.ankiweb.net" target="_blank" class="resource-link">Anki Flashcards</a>
+                    <a href="https://forest.app" target="_blank" class="resource-link">Forest (Focus App)</a>
+                    <a href="https://be-focused.com" target="_blank" class="resource-link">Be Focused (Pomodoro)</a>
+                </div>
+                
+                <div class="resource-category">
+                    <h4>💼 Career Resources</h4>
+                    <a href="https://www.linkedin.com/jobs" target="_blank" class="resource-link">LinkedIn Jobs</a>
+                    <a href="https://www.cybersek.org" target="_blank" class="resource-link">CyberSeek Job Market</a>
+                    <a href="https://github.com" target="_blank" class="resource-link">GitHub (Portfolio)</a>
+                    <a href="https://www.glassdoor.com" target="_blank" class="resource-link">Glassdoor Salaries</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="competitive-advantage">
+        <h3>🧠 ADHD-Friendly Learning Tips (No Traditional Notes!)</h3>
+        <p><strong>📝 Instead of Notes, Create:</strong></p>
+        <p><strong>• Command Cheat Sheets:</strong> Copy-paste useful commands into text files (nmap_commands.txt, burp_tips.txt)</p>
+        <p><strong>• Screenshot Everything:</strong> Successful exploits, tool outputs, before/after scans</p>
+        <p><strong>• Record Videos:</strong> Use OBS (free) to record yourself doing labs - great for portfolio</p>
+        <p><strong>• Simple Writeups:</strong> Target → Tools → Results → Next Steps (portfolio-ready)</p>
+        <p><strong>• Save Scripts:</strong> Build your personal toolkit of code you use/modify</p>
+        <p><strong>• Bookmark Tools:</strong> GitHub repos, useful websites, resources</p>
+        
+        <p><strong>💡 Learning Hacks:</strong></p>
+        <p><strong>• Break into 25-min chunks</strong> (Pomodoro technique works great for ADHD)</p>
+        <p><strong>• Do, don't just read</strong> - immediately practice what you learn</p>
+        <p><strong>• Build while learning</strong> - every task creates something for your portfolio</p>
+        <p><strong>• Use timers</strong> - set limits to avoid hyperfocus burnout</p>
+    </div>
+
+    <div class="competitive-advantage">
+        <h3>🏆 Your Competitive Advantages</h3>
+        <p><strong>1. Healthcare IT Experience:</strong> You understand Equitas Health's systems</p>
+        <p><strong>2. Fast Learning:</strong> 12-week intensive vs. years of gradual learning</p>
+        <p><strong>3. Modern Skills:</strong> Latest techniques and certifications</p>
+        <p><strong>4. Project Portfolio:</strong> Demonstrable results and documentation</p>
+    </div>
+
+    <!-- WEEKS 1-3: FOUNDATION -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>Weeks 1-3: Foundation & Lab Setup</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+            
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 1: TryHackMe Pre Security Path (FREE)</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task1">
+                        <div class="task-content">
+                            <div class="task-title">Complete Pre Security Learning Path</div>
+                            <p><strong>Direct Link:</strong> <a href="https://tryhackme.com/path/outline/presecurity" target="_blank" style="color: #3498db; font-weight: bold;">TryHackMe Pre Security Path</a></p>
+                            <p><strong>17 Rooms Total:</strong> Network Fundamentals, Web Applications, Linux Basics</p>
+                            <p><strong>Daily Goal:</strong> 2-3 rooms per day, create simple command cheat sheets</p>
+                            <p><strong>💡 ADHD Tip:</strong> Screenshot every successful command, save to "commands" folder</p>
+                            <div class="time-box">⏰ 15-20 hours | FREE account</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task2">
+                        <div class="task-content">
+                            <div class="task-title">Build your cybersecurity lab</div>
+                            <p><strong>Downloads:</strong> <a href="https://www.virtualbox.org" target="_blank" style="color: #3498db;">VirtualBox</a> + <a href="https://www.kali.org/get-kali/" target="_blank" style="color: #3498db;">Kali Linux</a> + <a href="https://developer.microsoft.com/en-us/windows/downloads/virtual-machines/" target="_blank" style="color: #3498db;">Windows 10 VM</a></p>
+                            <p><strong>Healthcare Focus:</strong> Simulate medical network environment</p>
+                            <p><strong>Documentation:</strong> Create lab setup guide for portfolio</p>
+                            <p><strong>💡 ADHD Tip:</strong> Take screenshots of each setup step - you'll need them later</p>
+                            <div class="time-box">⏰ 4-6 hours setup</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 2: Upgrade to Premium & Network Security</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task3">
+                        <div class="task-content">
+                            <div class="task-title">Subscribe TryHackMe Premium & Start Jr Pentester</div>
+                            <p><strong>Subscribe:</strong> <a href="https://tryhackme.com/path/outline/jrpenetrationtester" target="_blank" style="color: #3498db; font-weight: bold;">Jr Penetration Tester Path</a> (requires $10/month premium)</p>
+                            <p><strong>Focus Modules:</strong> Network Security, Nmap, Network Services</p>
+                            <p><strong>Goal:</strong> Understand how networks work and how to scan them</p>
+                            <div class="time-box">💰 $10/month | ⏰ 15-20 hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task4">
+                        <div class="task-content">
+                            <div class="task-title">Master network scanning and enumeration</div>
+                            <p><strong>Tools:</strong> Nmap, Masscan, Rustscan</p>
+                            <p><strong>Practice:</strong> Scan your lab network, save command outputs to files</p>
+                            <p><strong>Healthcare Context:</strong> Identify medical device vulnerabilities</p>
+                            <p><strong>💡 ADHD Tip:</strong> Use "nmap [command] | tee scan_results.txt" to save outputs automatically</p>
+                            <div class="time-box">⏰ 12-15 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 3: Web Application Security</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task5">
+                        <div class="task-content">
+                            <div class="task-title">Complete Web Application Security modules</div>
+                            <p><strong>Jr Pentester modules:</strong> Web App Security, OWASP Top 10, Burp Suite</p>
+                            <p><strong>Skills:</strong> SQL injection, XSS, authentication bypass</p>
+                            <p><strong>Healthcare Focus:</strong> Patient portal and EMR vulnerabilities</p>
+                            <p><strong>💡 ADHD Tip:</strong> Create a "payloads.txt" file with successful SQL injection and XSS payloads</p>
+                            <div class="time-box">⏰ 18-22 hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task6">
+                        <div class="task-content">
+                            <div class="task-title">Create healthcare web security assessment</div>
+                            <p><strong>Project:</strong> Assess common healthcare web applications</p>
+                            <p><strong>Deliverable:</strong> Security checklist for patient portals</p>
+                            <p><strong>Portfolio Item:</strong> Professional vulnerability assessment report</p>
+                            <div class="time-box">⏰ 6-8 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WEEKS 4-7: ADVANCED PENETRATION TESTING -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>Weeks 4-7: Advanced Penetration Testing</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+            
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 4: Linux & Privilege Escalation</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task7">
+                        <div class="task-content">
+                            <div class="task-title">Master Linux privilege escalation</div>
+                            <p><strong>Modules:</strong> Linux PrivEsc, What the Shell?</p>
+                            <p><strong>Skills:</strong> SUID exploitation, cron jobs, kernel exploits</p>
+                            <p><strong>Practice:</strong> Root 5+ different Linux VMs</p>
+                            <div class="time-box">⏰ 15-18 hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task8">
+                        <div class="task-content">
+                            <div class="task-title">Build automated exploitation scripts</div>
+                            <p><strong>Languages:</strong> Bash and Python scripting</p>
+                            <p><strong>Tools:</strong> LinPEAS, LinEnum, custom scripts</p>
+                            <p><strong>Goal:</strong> Automate privilege escalation discovery</p>
+                            <div class="time-box">⏰ 8-10 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 5: Windows Exploitation & Active Directory</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task9">
+                        <div class="task-content">
+                            <div class="task-title">Master Windows exploitation</div>
+                            <p><strong>Modules:</strong> Windows PrivEsc, Active Directory Basics</p>
+                            <p><strong>Skills:</strong> Token impersonation, UAC bypass, AD enumeration</p>
+                            <p><strong>Healthcare Context:</strong> Hospital Windows environments</p>
+                            <div class="time-box">⏰ 18-22 hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task10">
+                        <div class="task-content">
+                            <div class="task-title">Build PowerShell attack toolkit</div>
+                            <p><strong>Tools:</strong> PowerView, BloodHound, Rubeus</p>
+                            <p><strong>Skills:</strong> AD reconnaissance, lateral movement</p>
+                            <p><strong>Portfolio:</strong> Document AD security assessment methodology</p>
+                            <div class="time-box">⏰ 10-12 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 6: Metasploit & Exploitation Frameworks</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task11">
+                        <div class="task-content">
+                            <div class="task-title">Master Metasploit Framework</div>
+                            <p><strong>Modules:</strong> Metasploit, Exploitation Basics</p>
+                            <p><strong>Skills:</strong> Exploit development, payload generation, post-exploitation</p>
+                            <p><strong>Practice:</strong> Exploit 10+ different vulnerabilities</p>
+                            <div class="time-box">⏰ 15-18 hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task12">
+                        <div class="task-content">
+                            <div class="task-title">Create custom exploitation framework</div>
+                            <p><strong>Project:</strong> Build Python-based exploitation tool</p>
+                            <p><strong>Features:</strong> Automated scanning, exploitation, reporting</p>
+                            <p><strong>Goal:</strong> Show advanced technical skills beyond current analyst</p>
+                            <div class="time-box">⏰ 12-15 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 7: Advanced Practice & Red Team Tactics</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task13">
+                        <div class="task-content">
+                            <div class="task-title">Complete challenging practice machines</div>
+                            <p><strong>Machines:</strong> Blue, Ice, Basic Pentesting 1-2, Steel Mountain</p>
+                            <p><strong>Methodology:</strong> Full kill chain from recon to exfiltration</p>
+                            <p><strong>Documentation:</strong> Professional penetration test reports</p>
+                            <div class="time-box">⏰ 20-25 hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task14">
+                        <div class="task-content">
+                            <div class="task-title">Learn advanced evasion techniques</div>
+                            <p><strong>Skills:</strong> AV evasion, payload obfuscation, living off the land</p>
+                            <p><strong>Tools:</strong> Veil, msfvenom, PowerShell Empire</p>
+                            <p><strong>Goal:</strong> Advanced skills beyond basic pentesting</p>
+                            <div class="time-box">⏰ 10-12 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WEEKS 8-10: SECURITY+ CERTIFICATION -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>Weeks 8-10: Security+ Certification (Industry Standard)</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+            
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 8: Domains 1-2 Study</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task15">
+                        <div class="task-content">
+                            <div class="task-title">Set up hands-on Security+ study approach</div>
+                            <p><strong>Videos:</strong> Professor Messer SY0-701 (FREE on YouTube)</p>
+                            <p><strong>Practice:</strong> Jason Dion practice exams ($15 on Udemy)</p>
+                            <p><strong>Method:</strong> Watch video → Practice concept in lab → Screenshot results → Take practice quiz</p>
+                            <div class="time-box">💰 $15 total | No books needed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task16">
+                        <div class="task-content">
+                            <div class="task-title">Study Domains 1-2 with hands-on practice</div>
+                            <p><strong>Domain 1:</strong> General Security Concepts</p>
+                            <p><strong>Domain 2:</strong> Threats, Vulnerabilities & Mitigations</p>
+                            <p><strong>Method:</strong> Reinforce concepts by practicing in your TryHackMe lab environment</p>
+                            <div class="time-box">⏰ 25-30 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 9: Domains 3-4 Study</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task17">
+                        <div class="task-content">
+                            <div class="task-title">Study Domains 3-4 with healthcare focus</div>
+                            <p><strong>Domain 3:</strong> Security Architecture</p>
+                            <p><strong>Domain 4:</strong> Security Operations</p>
+                            <p><strong>Healthcare Focus:</strong> HIPAA, medical device security, compliance</p>
+                            <div class="time-box">⏰ 25-30 hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task18">
+                        <div class="task-content">
+                            <div class="task-title">Complete full-length practice exams</div>
+                            <p><strong>Goal:</strong> Consistently score 85%+ before scheduling real exam</p>
+                            <p><strong>Method:</strong> Take exam → Review wrong answers → Study weak areas</p>
+                            <p><strong>Frequency:</strong> 1 practice exam every 2 days</p>
+                            <div class="time-box">⏰ 10-12 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 10: Domain 5 & Certification Exam</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task19">
+                        <div class="task-content">
+                            <div class="task-title">Master Domain 5 & pass Security+ exam</div>
+                            <p><strong>Domain 5:</strong> Security Program Management & Oversight</p>
+                            <p><strong>Healthcare Context:</strong> Apply to Equitas Health compliance requirements</p>
+                            <p><strong>Exam:</strong> Schedule and pass SY0-701 certification</p>
+                            <div class="time-box">💰 $370 exam fee | ⏰ 15-20 hours prep</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task20">
+                        <div class="task-content">
+                            <div class="task-title">Document certification achievement</div>
+                            <p><strong>Action:</strong> Update LinkedIn, resume, portfolio with Security+</p>
+                            <p><strong>Workplace:</strong> Inform management of certification achievement</p>
+                            <p><strong>Next Steps:</strong> Research advanced certifications (CEH, CySA+)</p>
+                            <div class="time-box">⏰ 2-3 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WEEKS 11-12: HEALTHCARE SECURITY SPECIALIZATION -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h2>Weeks 11-12: Healthcare Security Specialization & Competitive Edge</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+            
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 11: Healthcare Security Projects</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task21">
+                        <div class="task-content">
+                            <div class="task-title">Create comprehensive HIPAA security assessment</div>
+                            <p><strong>Project:</strong> Full security assessment of Equitas Health infrastructure</p>
+                            <p><strong>Deliverable:</strong> Executive summary with risk ratings and remediation plans</p>
+                            <p><strong>Competitive Advantage:</strong> Show immediate value to organization</p>
+                            <div class="time-box">⏰ 12-15 hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task22">
+                        <div class="task-content">
+                            <div class="task-title">Complete TryHackMe Cyber Defense path</div>
+                            <p><strong>Focus:</strong> Incident response, threat hunting, blue team skills</p>
+                            <p><strong>Goal:</strong> Balance offensive skills with defensive capabilities</p>
+                            <p><strong>Healthcare Context:</strong> Medical device monitoring and protection</p>
+                            <div class="time-box">⏰ 15-18 hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task23">
+                        <div class="task-content">
+                            <div class="task-title">Build security automation tools</div>
+                            <p><strong>Tools:</strong> Python scripts for vulnerability scanning, log analysis</p>
+                            <p><strong>Integration:</strong> Tools specific to healthcare environment</p>
+                            <p><strong>Portfolio:</strong> Demonstrate advanced technical capabilities</p>
+                            <div class="time-box">⏰ 10-12 hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="week">
+                <div class="week-header" onclick="toggleWeek(this)">
+                    <span>Week 12: Career Advancement Strategy</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="week-content">
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task24">
+                        <div class="task-content">
+                            <div class="task-title">Plan next certification for competitive advantage</div>
+                            <p><strong>Option 1:</strong> CEH (Ethical Hacker) - advanced penetration testing</p>
+                            <p><strong>Option 2:</strong> CySA+ (Analyst) - defensive security operations</p>
+                            <p><strong>Option 3:</strong> HCISPP - healthcare-specific information security</p>
+                            <div class="time-box">⏰ 6-8 hours research</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task25">
+                        <div class="task-content">
+                            <div class="task-title">Present security initiatives to management</div>
+                            <p><strong>Action:</strong> Propose security improvements using your new expertise</p>
+                            <p><strong>Examples:</strong> Vulnerability management program, incident response plan</p>
+                            <p><strong>Goal:</strong> Position yourself as the go-to security expert</p>
+                            <div class="time-box">⏰ 8-10 hours preparation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="task">
+                        <input type="checkbox" class="task-checkbox" id="task26">
+                        <div class="task-content">
+                            <div class="task-title">Establish ongoing learning plan</div>
+                            <p><strong>Continuous Learning:</strong> Stay ahead of current analyst</p>
+                            <p><strong>Resources:</strong> Advanced TryHackMe paths, conferences, certifications</p>
+                            <p><strong>Networking:</strong> Join healthcare cybersecurity communities</p>
+                            <div class="time-box">⏰ Ongoing career development</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="competitive-advantage">
+        <h3>🎯 After 12 Weeks, You'll Have:</h3>
+        <p><strong>• Security+ Certification</strong> (industry standard requirement)</p>
+        <p><strong>• 50+ Hands-on Labs</strong> completed with documentation</p>
+        <p><strong>• Healthcare Security Expertise</strong> that your current analyst likely lacks</p>
+        <p><strong>• Professional Portfolio</strong> with real vulnerability assessments</p>
+        <p><strong>• Advanced Technical Skills</strong> in both offensive and defensive security</p>
+        <p><strong>• Automation Capabilities</strong> that increase efficiency</p>
+    </div>
+
+    <div class="competitive-advantage">
+        <h3>🧰 ADHD Study Toolkit - Quick Reference</h3>
+        <p><strong>📂 File Organization:</strong></p>
+        <p>• commands/ (nmap.txt, burp.txt, metasploit.txt)</p>
+        <p>• screenshots/ (by week/topic)</p>
+        <p>• scripts/ (save any code you modify)</p>
+        <p>• writeups/ (simple lab summaries)</p>
+        
+        <p><strong>⏰ Time Management:</strong></p>
+        <p>• Use 25-minute focused sessions (Pomodoro)</p>
+        <p>• Set timers to avoid hyperfocus burnout</p>
+        <p>• Take 5-minute breaks between tasks</p>
+        
+        <p><strong>🎯 Focus Techniques:</strong></p>
+        <p>• One task at a time (use the checkboxes!)</p>
+        <p>• Immediately practice what you learn</p>
+        <p>• Record yourself explaining concepts (helps retention)</p>
+        <p>• Use background music/noise if it helps</p>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            content.classList.toggle('open');
+            icon.classList.toggle('rotated');
+        }
+
+        function toggleWeek(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            content.classList.toggle('open');
+            icon.classList.toggle('rotated');
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const checked = document.querySelectorAll('.task-checkbox:checked');
+            const percentage = Math.round((checked.length / checkboxes.length) * 100);
+            
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressPercent').textContent = percentage + '%';
+            
+            // Add completed class to tasks
+            checkboxes.forEach(checkbox => {
+                const task = checkbox.closest('.task');
+                if (checkbox.checked) {
+                    task.classList.add('completed');
+                } else {
+                    task.classList.remove('completed');
+                }
+            });
+            
+            // Save progress to localStorage
+            const progress = Array.from(checkboxes).map(cb => cb.checked);
+            localStorage.setItem('cybersecurityProgress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('cybersecurityProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                const checkboxes = document.querySelectorAll('.task-checkbox');
+                checkboxes.forEach((checkbox, index) => {
+                    if (progress[index]) {
+                        checkbox.checked = true;
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateProgress);
+            });
+            
+            loadProgress();
+            updateProgress();
+        });
+    </script>
 </body>
 </html>
